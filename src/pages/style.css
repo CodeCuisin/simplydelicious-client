@@ -2,50 +2,86 @@
     width: 100%;
     height: 100%;
     color: aliceblue;
-  }
-  .homepage{
+}
+
+.homepage {
     background-color: rgb(6, 11, 7);
-  }
-  .recipe-page{
-    background-color:#f6ecee;
-    width:100%;
+}
+
+.recipe-page {
+    background-color: #f6ecee;
+    width: 100%;
     height: 100%;
-  }
-  .flex {
+}
+
+.flex {
     display: flex;
     width: 100%;
     height: 100%;
     justify-content: space-between;
-  }
-  
-  .content {
+}
+
+.content {
     margin-top: 5%;
     font-size: 24px;
     padding: 50px;
     width: 550px;
-  }
-  
-  h1 {
+}
+
+h1 {
     top: 10%;
     font-size: 50px;
     font-style: italic;
     text-align: center;
-  }
-  
-  h2 {
+}
+
+h2 {
     text-align: center;
-  }
-  .hero{
-    margin-right:30px;
-  }
-  .sidebar{
-    background-color: black;
-    width:200px;
-    height: 1000px;
-  }
-  .sidebar-list{
-    display:flex;
+}
+
+.hero {
+    margin-right: 30px;
+}
+
+.sidebar {
+    background-color: rgb(11, 49, 11);
+    width: 200px;
+    height: 1400px;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+}
+
+.sidebar-list {
     gap: 50px;
+    color: #3b3a3a;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-link {
+    text-decoration: none;
+}
+
+.Recipe,
+.main {
+    width: 100%;
+    padding: 10px;
+    background-color: #ecebeb;
+    color: rgb(26, 20, 20);
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+.main:hover, .Recipe:hover {
+    background-color: #777;
   }
