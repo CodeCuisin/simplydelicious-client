@@ -11,7 +11,6 @@ type SidebarItem = {
 const Sidebar: React.FC = () => {
   // Define the sidebar items
   const sidebarItems: SidebarItem[] = [
-   
     { label: "My Profile 👤", link: "/profile" },
     { label: "Categories", link: "/categories" },
     { label: "Popular Recipes 📓", link: "/popular" },
@@ -21,8 +20,9 @@ const Sidebar: React.FC = () => {
   return (
     <div className="sidebar">
       <ul className="sidebar-list">
-        <Link to = "/">
-        <button className="main"> Home 🏠︎</button></Link>
+        <Link to="/">
+          <button className="main"> Home 🏠︎</button>
+        </Link>
         {sidebarItems.map((item, index) => (
           <button className="Recipe">
             {" "}

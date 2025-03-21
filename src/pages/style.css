@@ -82,6 +82,8 @@ h2 {
     border-radius: 5px;
 
 }
-.main:hover, .Recipe:hover {
+
+.main:hover,
+.Recipe:hover {
     background-color: #777;
-  }
+}

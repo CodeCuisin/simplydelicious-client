@@ -8,9 +8,8 @@ export const getRecipes = async (): Promise<Recipe[]> => {
   return response.data;
 };
 
-export const createRecipe = async (newRecipe: Omit <Recipe, 'id' |'createdAt'| 'updatedAt'>): Promise<Recipe> => {
-    const response = await axios.post(`${API_URL}/create-recipe`, newRecipe);
-    return response.data;
-
-
-}
+export const createRecipe = async (
+  newRecipe: Omit<Recipe, "id" | "createdAt" | "updatedAt">): Promise<Recipe> => {
+  const response = await axios.post(`${API_URL}/create-recipe`, newRecipe);
+  return response.data;
+};
