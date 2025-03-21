@@ -1,0 +1,51 @@
+#root {
+    width: 100%;
+    height: 100%;
+    color: aliceblue;
+  }
+  .homepage{
+    background-color: rgb(6, 11, 7);
+  }
+  .recipe-page{
+    background-color:#f6ecee;
+    width:100%;
+    height: 100%;
+  }
+  .flex {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+  }
+  
+  .content {
+    margin-top: 5%;
+    font-size: 24px;
+    padding: 50px;
+    width: 550px;
+  }
+  
+  h1 {
+    top: 10%;
+    font-size: 50px;
+    font-style: italic;
+    text-align: center;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  .hero{
+    margin-right:30px;
+  }
+  .sidebar{
+    background-color: black;
+    width:200px;
+    height: 1000px;
+  }
+  .sidebar-list{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
