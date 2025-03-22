@@ -9,7 +9,26 @@ export const getRecipes = async (): Promise<Recipe[]> => {
 };
 
 export const createRecipe = async (
-  newRecipe: Omit<Recipe, "id" | "createdAt" | "updatedAt">): Promise<Recipe> => {
+  newRecipe: Omit<Recipe, "id" | "createdAt" | "updatedAt">
+): Promise<Recipe> => {
   const response = await axios.post(`${API_URL}/create-recipe`, newRecipe);
+  return response.data;
+};
+
+export const getRecipeById = async (id: number): Promise<Recipe> => {
+  const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+};
+
+export const updateRecipe = async (
+  id: number,
+  updatedRecipe: Partial<Omit<Recipe, "id" | "createdAt" | "updatedAt">>
+): Promise<Recipe> => {
+  const response = await axios.put(`${API_URL}/${id}`, updatedRecipe);
+  return response.data;
+};
+
+export const deleteRecipe = async (id: number): Promise<Recipe> => {
+  const response = await axios.delete(`${API_URL}/${id}`);
   return response.data;
 };
