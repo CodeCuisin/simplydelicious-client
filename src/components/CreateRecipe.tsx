@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Recipe } from "../pages/types";
 import { createRecipe } from "../utils/recipe.routes";
+import './recipe.css';
 
 const CreateRecipe: React.FC = () => {
   const [formData, setFormData] = useState<
@@ -31,8 +32,9 @@ const CreateRecipe: React.FC = () => {
   };
   return (
     <div>
-      <h1> Create Recipe</h1>
+      <h1 className="title"> Create Recipe</h1>
       <form onSubmit={handleSubmit}>
+        <div className="create">
         <input
           type="text"
           name="title"
@@ -73,7 +75,9 @@ const CreateRecipe: React.FC = () => {
           onChange={handleChange}
           placeholder="Servings "
         />
+       
         <button type="submit"> Create Recipe</button>
+        </div>
       </form>
     </div>
   );

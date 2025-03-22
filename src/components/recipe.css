@@ -1,0 +1,23 @@
+h1{
+color:black;
+}
+
+.create{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+    
+}
+
+input{
+    width:400px;
+    height: 50px;
+}
+
+textarea{
+    width:400px;
+    height: 50px;  
+}
+
