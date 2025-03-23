@@ -1,12 +1,12 @@
 export type Recipe = {
-  id: number;
+  id: number | string;
   title: string;
   description: string;
   ingredients: string[];
   instructions: string[];
-  image?: string;
-  cookingTime?: number;
-  servings?: number;
+  image?: string | null;
+  cookingTime?: string;
+  serving?: number;
   createdAt: Date;
   updatedAt: Date;
 };
