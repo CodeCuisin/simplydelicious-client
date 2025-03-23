@@ -11,8 +11,8 @@ const CreateRecipe: React.FC = () => {
     ingredients: [""],
     instructions: [""],
     image: "",
-    cookingTime: 0,
-    servings: 0,
+    cookingTime: "",
+    serving: 0,
   });
 
   const handleChange = (
@@ -42,6 +42,13 @@ const CreateRecipe: React.FC = () => {
           onChange={handleChange}
           placeholder="Recipe Title"
         />
+           <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Recipe description"
+        />
         <textarea
           name="ingredients"
           value={formData.ingredients}
@@ -62,18 +69,18 @@ const CreateRecipe: React.FC = () => {
           placeholder="Image URL"
         />
         <input
-          type="number"
-          name="CookingTime"
+          type="text"
+          name="cookingTime"
           value={formData.cookingTime}
           onChange={handleChange}
           placeholder="Recipe Cooking Time"
         />
         <input
           type="number"
-          name="servings"
-          value={formData.servings}
+          name="serving"
+          value={formData.serving}
           onChange={handleChange}
-          placeholder="Servings "
+          placeholder="Serving "
         />
        
         <button type="submit"> Create Recipe</button>
