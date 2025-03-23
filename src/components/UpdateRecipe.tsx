@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Recipe } from "../pages/types";
-import {  getRecipeById, updateRecipe } from "../utils/recipe.routes";
+import {  createRecipe, getRecipeById, updateRecipe } from "../utils/recipe.routes";
 import './recipe.css';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateRecipe: React.FC = () => {
     const {recipeId} = useParams<{recipeId:string}> ();
+    const navigate = useNavigate();
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt"> >({
     title: "",
@@ -58,21 +59,26 @@ useEffect (() => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try{
     if (recipeId) {
-        updateRecipe(Number(recipeId), formData)
-          .then((updatedRecipe) => {
-            alert(`Recipe "${updatedRecipe.title}" updated successfully!`);
-          })
-          .catch((error) => {
+       const updatedRecipe= await updateRecipe(Number(recipeId), formData)
+           alert(`Recipe "${updatedRecipe.title}" updated successfully!`);
+           
+          }else{
+            const newRecipe = await createRecipe(formData);
+            alert(`Recipe "${newRecipe.title}" created successfully!`);
+          }
+          navigate("/recipes");
+        }
+          catch(error) {
             console.error("Error updating recipe:", error);
             alert("Failed to update recipe.");
-          });
-      }
+          };
     };
 
   return (
     <div>
-      <h1 className="title"> Create Recipe</h1>
+      <h1 className="title"> Update Recipe</h1>
       <form onSubmit={handleSubmit}>
         <div className="create">
         <input
@@ -114,9 +120,9 @@ useEffect (() => {
           value={formData.serving}
           onChange={handleChange}
           placeholder="Serving "
-        />
+        /> 
        
-        <button type="submit"> Create Recipe</button>
+        <button type="submit"> Update</button>
         </div>
       </form>
     </div>

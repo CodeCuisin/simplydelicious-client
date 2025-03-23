@@ -3,7 +3,7 @@ import "../pages/style.css";
 import { useEffect, useState } from "react";
 import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
-import { Link, useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const Recipes: React.FC = () => {
 
