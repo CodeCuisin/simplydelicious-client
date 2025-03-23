@@ -99,6 +99,12 @@ const UpdateRecipe: React.FC = () => {
             onChange={handleChange}
             placeholder="Recipe Title"
           />
+           <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Recipe description"
+          />
           <textarea
             name="ingredients"
             value={formData.ingredients}
