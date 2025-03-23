@@ -1,14 +1,16 @@
 #root {
     width: 100%;
     height: 100%;
-    color: aliceblue;
+    color: rgb(4, 10, 15);
 }
 
 .homepage {
     background-color: rgb(6, 11, 7);
+    color: aliceblue;
 }
 
 .recipe-page {
+    display: flex;
     background-color: #f6ecee;
     width: 100%;
     height: 100%;
@@ -86,4 +88,13 @@ h2 {
 .main:hover,
 .Recipe:hover {
     background-color: #777;
+}
+
+.recipe-label{
+    background-color: aqua;
+}
+
+.dishes {
+    margin-top: 200px;
+    gap: 50px;
 }

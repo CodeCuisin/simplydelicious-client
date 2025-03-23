@@ -1,15 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-// Define the type for sidebar items
+
 type SidebarItem = {
   label: string;
   link: string;
 };
 
-// Sidebar Component
 const Sidebar: React.FC = () => {
-  // Define the sidebar items
+
   const sidebarItems: SidebarItem[] = [
     { label: "My Profile 👤", link: "/profile" },
     { label: "Categories", link: "/categories" },
@@ -24,9 +23,9 @@ const Sidebar: React.FC = () => {
           <button className="main"> Home 🏠︎</button>
         </Link>
         {sidebarItems.map((item, index) => (
-          <button className="Recipe">
+          <button key={index} className="Recipe">
             {" "}
-            <li key={index} className="sidebar-item">
+            <li className="sidebar-item">
               <Link to={item.link} className="sidebar-link">
                 {item.label}
               </Link>
