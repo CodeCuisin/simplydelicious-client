@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/auth.context";
 
 
 type SidebarItem = {
   label: string;
   link: string;
+  hideIfLoggedIn?: boolean;
+  onClick?: () => void;
 };
 
-const Sidebar: React.FC = () => {
 
+
+const Sidebar: React.FC = () => {
+  const { isLoggedIn, logOutUser } = useAuth();
   const sidebarItems: SidebarItem[] = [
-    { label: "Sign up 👤", link: "/Signup" },
-    { label: "Login 👤", link: "/login" },
-    { label: "Logout 👤", link: "/logout" },
+
+    { label: "Login 👤", link: "/login", hideIfLoggedIn: true },
     { label: "My Profile 👤", link: "/profile" },
     { label: "Categories", link: "/categories" },
     { label: "Popular Recipes 📓", link: "/popular" },
@@ -25,16 +29,21 @@ const Sidebar: React.FC = () => {
         <Link to="/">
           <button className="main"> Home 🏠︎</button>
         </Link>
-        {sidebarItems.map((item, index) => (
+        {sidebarItems.filter((item) => !(isLoggedIn && item.hideIfLoggedIn)).map((item, index) => (
           <button key={index} className="Recipe">
             {" "}
-            <li className="sidebar-item">
-              <Link to={item.link} className="sidebar-link">
+              <Link className="sidebar-item" to={item.link} >
                 {item.label}
               </Link>
-            </li>
           </button>
         ))}
+       {isLoggedIn && (
+          <li>
+            <button className="Recipe" onClick={logOutUser}>
+              Logout 👤
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   );
