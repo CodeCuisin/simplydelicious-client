@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteRecipe, getRecipeById } from "../utils/recipe.routes";
 import { Recipe } from "../pages/types";
+import Sidebar from "./Sidebar";
+import { Navbar } from "./Navbar";
 
 const Recipedetails: React.FC = () => {
   console.log("Rendering Recipes Component");
@@ -41,6 +43,8 @@ const Recipedetails: React.FC = () => {
 
   return (
     <div>
+      <Sidebar />
+      <Navbar />
       {recipes.length === 0 ? (
         <p>No recipes found.</p>
       ) : (

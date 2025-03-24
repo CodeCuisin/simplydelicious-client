@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
 import { Link } from "react-router-dom";
+import { Navbar } from "./Navbar";
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -32,7 +33,13 @@ const Recipes: React.FC = () => {
 
   return (
     <div className="recipe-page">
+    
       <Sidebar />
+      <div className="content-container">
+        <Navbar />
+
+  
+        <div className="recipe-content">
       <h1 className="recipe-title"> Available Recipes </h1>
       {loading ? (
         <p>Loading...</p>
@@ -45,7 +52,7 @@ const Recipes: React.FC = () => {
           ) : (
             recipes.map((recipeObj) => (
               <div className="recipe-card" key={recipeObj.id}>
-                <h3>{recipeObj.title}</h3>
+                <h3><b>{recipeObj.title}</b></h3>
                 {recipeObj.image ? (
                   <img
                     src={recipeObj.image}
@@ -67,6 +74,8 @@ const Recipes: React.FC = () => {
           )}
         </div>
       )}
+    </div>
+    </div>
     </div>
   );
 };
