@@ -10,6 +10,9 @@ type SidebarItem = {
 const Sidebar: React.FC = () => {
 
   const sidebarItems: SidebarItem[] = [
+    { label: "Sign up 👤", link: "/Signup" },
+    { label: "Login 👤", link: "/login" },
+    { label: "Logout 👤", link: "/logout" },
     { label: "My Profile 👤", link: "/profile" },
     { label: "Categories", link: "/categories" },
     { label: "Popular Recipes 📓", link: "/popular" },
