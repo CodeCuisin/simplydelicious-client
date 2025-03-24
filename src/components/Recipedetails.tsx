@@ -43,8 +43,8 @@ const Recipedetails: React.FC = () => {
 
   return (
     <div>
-      <Sidebar />
-      <Navbar />
+      {/*<Sidebar />
+      <Navbar />*/}
       {recipes.length === 0 ? (
         <p>No recipes found.</p>
       ) : (

@@ -3,9 +3,10 @@ import { Recipe } from "../pages/types";
 import { createRecipe } from "../utils/recipe.routes";
 import "./recipe.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
-const uploadToCloudinary = async (file: File) => {
+export const uploadToCloudinary = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET);
@@ -24,6 +25,8 @@ const uploadToCloudinary = async (file: File) => {
 };
 
 const CreateRecipe: React.FC = () => {
+  
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt">
   >({
@@ -98,6 +101,7 @@ const CreateRecipe: React.FC = () => {
         serving: 0,
       });
       setImage(null); // Reset image state
+      navigate("/recipes");
     } catch (error) {
       console.error("Error creating recipe:", error);
       alert("Failed to create recipe.");
