@@ -55,8 +55,8 @@ const UpdateRecipe: React.FC = () => {
           image: existingRecipe.image || "",
           cookingTime: existingRecipe.cookingTime || "",
           serving: existingRecipe.serving || 0,
-          tags: [],
-          cuisine: "",
+          tags: existingRecipe.tags || [],
+          cuisine: existingRecipe.cuisine || "",
           author: authorObj,
         });
       } catch (error) {
@@ -128,7 +128,7 @@ const UpdateRecipe: React.FC = () => {
         imageUrl = await uploadToCloudinary(imageFile);
       }
 
-      const updatedData = { ...formData, image: imageUrl };
+      const updatedData = { ...formData, image: imageUrl,tags: formData.tags, };
       console.log("Updated Data:", updatedData);
 
       if (recipeId) {
@@ -140,7 +140,7 @@ const UpdateRecipe: React.FC = () => {
       }
       navigate(`/recipes/${recipeId}`);
     } catch (error) {
-      console.error("Error updating recipe:", error);
+      console.error("Error updating recipe:", error );
       alert("Failed to update recipe.");
     }
   };

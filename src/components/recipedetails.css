@@ -113,7 +113,22 @@
     background: #f44336;
   }
   
-
+  .label-container {
+    display: flex;
+    gap: 10px; 
+    align-items: center; 
+  }
+.label{
+    display:flex;
+    margin-right: 8px;
+    padding: 4px 18px;
+    border-radius: 12px;
+    background-color: #e73f5863;
+    color: #422ec0;
+    font-size: 14px;
+    width:100px;
+    
+}
   
   /* Responsive Design: Stack on Small Screens */
   @media (max-width: 768px) {

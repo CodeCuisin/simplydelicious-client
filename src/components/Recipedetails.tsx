@@ -99,20 +99,34 @@ const Recipedetails: React.FC = () => {
                   <p>
                     <b>Serving:</b> {recipeObj.serving}
                   </p>
-{/* Debugging to check the `user` and `recipeObj.author` 
+                  <div className="label-container">
+                    {" "}
+                    {recipeObj.tags.map((tags: string, index: number) => (
+                      <label className="label" key={index}>
+                        {tags}
+                      </label>
+                    ))}
+                    <label className="label">{recipeObj.cuisine}</label>
+                  </div>
+                  {/* Debugging to check the `user` and `recipeObj.author` 
 <p>Current User ID: {user?.id}</p>
                   <p>Author ID: {recipeObj.author?.id}</p>*/}
 
-                  {user && recipeObj.author && recipeObj.author.id === user.id && (
-                    <div>
-                      <Link to={`/recipes/${recipeObj.id}/update`}>
-                        <button className="update-btn">Update Recipe</button>
-                      </Link>
-                      <button className="delete-btn" onClick={() => handleDelete(recipeObj.id)}>
-                        Delete Recipe
-                      </button>
-                    </div>
-                  )}
+                  {user &&
+                    recipeObj.author &&
+                    recipeObj.author.id === user.id && (
+                      <div>
+                        <Link to={`/recipes/${recipeObj.id}/update`}>
+                          <button className="update-btn">Update Recipe</button>
+                        </Link>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(recipeObj.id)}
+                        >
+                          Delete Recipe
+                        </button>
+                      </div>
+                    )}
                 </div>
               </div>
             ))

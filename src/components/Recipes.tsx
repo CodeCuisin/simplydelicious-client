@@ -69,6 +69,13 @@ const Recipes: React.FC = () => {
                         <p>No image available</p>
                       )}
                       <p>Cooking Time: {recipeObj.cookingTime}</p>
+                      <div className="label-container"> {recipeObj.tags.map(
+                      (tags: string, index: number) => (
+                        <label className= "label" key={index}>{tags}</label>
+                      )
+                    )}
+                  <label  className= "label">{recipeObj.cuisine}</label></div>
+                     
                       <Link to={`/recipes/${recipeObj.id}`}>
                         <button>More</button>
                       </Link>
