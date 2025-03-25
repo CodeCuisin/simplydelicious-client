@@ -1,5 +1,5 @@
 export type Recipe = {
-  id: number | string;
+  id: number ;
   title: string;
   description: string;
   ingredients: string[];
@@ -9,13 +9,15 @@ export type Recipe = {
   serving?: number;
   createdAt: Date;
   updatedAt: Date;
-  authorId: number | string | null;
+  author:  User ;
 };
+
 export type User = {
-  id: number | String;
+  id: number ;
   name: string;
   email: string;
   password: string;
   bio?: string | null; 
-  image?: string | null; 
+  image?: string | null;
+  recipes: Recipe[];
 };

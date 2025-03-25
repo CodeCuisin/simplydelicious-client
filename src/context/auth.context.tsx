@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext, ReactNode } from "react";
 import axios from "axios";
+import { Recipe } from "../pages/types";
 
 // Define the AuthContext Type
 interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
-  user: User | null;
+  user: User;
   storeToken: (token: string) => void;
   logOutUser: () => void;
   authenticateUser: () => void;
@@ -13,11 +14,22 @@ interface AuthContextType {
 
 // Define User Type
 interface User {
-  _id: string;
-  email: string;
+  id: number;
   name: string;
+  email: string;
+  password: string;
+  bio?: string | null;
+  image?: string | null;
+  recipes: Recipe[];
 }
 
+const emptyObj = {
+  id: 0,
+  name: "",
+  email: "",
+  password: "",
+  recipes: []
+};
 // Create AuthContext with Default Value as Undefined
 const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 
@@ -38,7 +50,11 @@ interface AuthProviderProps {
 const AuthProviderWrapper: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>({ id: 0,
+    name: "",
+    email: "",
+    password: "",
+    recipes: []});
 
   // Store token in local storage and authenticate user
   const storeToken = (token: string) => {
@@ -50,6 +66,8 @@ const AuthProviderWrapper: React.FC<AuthProviderProps> = ({ children }) => {
   // Remove token from storage
   const removeToken = () => {
     localStorage.removeItem("authToken");
+    setIsLoggedIn(false); 
+    setUser(emptyObj);
   };
 
   // Authenticate user with stored token
@@ -66,14 +84,14 @@ const AuthProviderWrapper: React.FC<AuthProviderProps> = ({ children }) => {
           setIsLoggedIn(true);
         })
         .catch(() => {
-          setUser(null);
+          setUser(emptyObj);
           setIsLoggedIn(false);
         })
         .finally(() => {
           setIsLoading(false);
         });
     } else {
-      setUser(null);
+      setUser(emptyObj);
       setIsLoggedIn(false);
       setIsLoading(false);
     }
