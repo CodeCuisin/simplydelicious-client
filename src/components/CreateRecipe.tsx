@@ -28,15 +28,16 @@ export const uploadToCloudinary = async (file: File) => {
     throw new Error("Failed to upload image.");
   }
 };
-const TAGS: Tag[] = ["LUNCH", "BREAKFAST", "DINNER", "DESSERT", "SNACKS"];
-const CUISINES: Cuisine[] = ["INDIAN", "ITALIAN", "MEXICAN", "FRENCH", "ARAB"];
+
 
 const CreateRecipe: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const authorObj = user;
   console.log(authorObj);
-
+  const TAGS: Tag[] = ["Lunch" , "Breakfast" , "Dinner" , "Dessert" , "Snacks"];
+  const CUISINES: Cuisine[] = ["Indian" , "Arabic" ,"Mexican" , "Italian" , "French","American" , "German" ,"" ];
+  
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt">
   >({
