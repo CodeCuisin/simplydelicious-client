@@ -12,12 +12,12 @@ type SidebarItem = {
 
 
 const Sidebar: React.FC = () => {
-
+  const {userId} = useParams();
   const { isLoggedIn, logOutUser } = useAuth();
   const sidebarItems: SidebarItem[] = [
 
     { label: "Login 👤", link: "/login", hideIfLoggedIn: true },
-    { label: "My Profile 👤", link: "/users/userId" },
+    { label: "My Profile 👤", link: `/users/${userId}` },
     { label: "Categories", link: "/categories" },
     { label: "Popular Recipes 📓", link: "/popular" },
     { label: "Create Recipe ✚ ", link: "/create-recipe" },
