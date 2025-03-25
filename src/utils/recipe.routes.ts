@@ -22,6 +22,7 @@ export const createRecipe = async (
 
 export const getRecipeById = async (recipeId: number): Promise<Recipe> => {
   const response = await axios.get(`${API_URL}/recipes/${recipeId}`);
+  console.log("Fetched Recipe:", response.data);
   return response.data;
 };
 
