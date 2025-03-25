@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
   const sidebarItems: SidebarItem[] = [
 
     { label: "Login 👤", link: "/login", hideIfLoggedIn: true },
-    { label: "My Profile 👤", link: "/profile" },
+    { label: "My Profile 👤", link: "/users/userId" },
     { label: "Categories", link: "/categories" },
     { label: "Popular Recipes 📓", link: "/popular" },
     { label: "Create Recipe ✚ ", link: "/create-recipe" },
