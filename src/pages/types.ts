@@ -10,6 +10,8 @@ export type Recipe = {
   createdAt: Date;
   updatedAt: Date;
   author:  User ;
+  tags: Tag[]; 
+  cuisine: Cuisine; 
 };
 
 export type User = {
@@ -21,3 +23,5 @@ export type User = {
   image?: string | null;
   recipes: Recipe[];
 };
+export type Tag = "Lunch" | "Breakfast" | "Dinner" | "Dessert" | "Snacks";
+export type Cuisine = "Indian" | "Arabic" | "Mexican" | "Italian" | "French"|"American" | "German" |"";  

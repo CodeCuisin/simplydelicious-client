@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Recipe } from "../pages/types";
+import { Cuisine, Recipe, Tag } from "../pages/types";
 import {
   createRecipe,
   getRecipeById,
@@ -14,11 +14,9 @@ const UpdateRecipe: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
-  console.log(user)
-  const authorId = user ? user.id : 0;
-  console.log(authorId)
   const authorObj = user;
-  console.log(authorObj)
+  const TAGS: Tag[] = ["Lunch" , "Breakfast" , "Dinner" , "Dessert" , "Snacks"];
+  const CUISINES: Cuisine[] = ["Indian" , "Arabic" ,"Mexican" , "Italian" , "French","American" , "German" ,"" ];
 
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt">
@@ -29,6 +27,8 @@ const UpdateRecipe: React.FC = () => {
     instructions: [""],
     image: "",
     cookingTime: "",
+    tags: [] as Tag[],
+    cuisine: "" as Cuisine,
     serving: 0,
     author: authorObj,
   });
@@ -55,6 +55,8 @@ const UpdateRecipe: React.FC = () => {
           image: existingRecipe.image || "",
           cookingTime: existingRecipe.cookingTime || "",
           serving: existingRecipe.serving || 0,
+          tags: [],
+          cuisine: "",
           author: authorObj,
         });
       } catch (error) {
@@ -65,7 +67,6 @@ const UpdateRecipe: React.FC = () => {
     fetchRecipe();
   }, [recipeId]);
 
-  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -75,19 +76,42 @@ const UpdateRecipe: React.FC = () => {
       if (name === "ingredients" || name === "instructions") {
         return { ...prev, [name]: value.split(",").map((item) => item.trim()) };
       }
-  
+
       if (name === "serving") {
         const parsedValue = parseInt(value, 10);
         return { ...prev, [name]: isNaN(parsedValue) ? 0 : parsedValue };
       }
-  
+
       return { ...prev, [name]: value };
     });
   };
 
   useEffect(() => {
-  console.log("Updated type of serving:", typeof formData.serving, formData.serving);
-}, [formData.serving]);
+    console.log(
+      "Updated type of serving:",
+      typeof formData.serving,
+      formData.serving
+    );
+  }, [formData.serving]);
+
+  const handleTagChange = (tag: Tag) => {
+    setFormData((prev) => ({
+      ...prev,
+      tags: prev.tags.includes(tag)
+        ? prev.tags.filter((t) => t !== tag) // Remove tag if it's already selected
+        : [...prev.tags, tag], 
+    }));
+  };
+
+  const handleSelectChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -104,12 +128,9 @@ const UpdateRecipe: React.FC = () => {
         imageUrl = await uploadToCloudinary(imageFile);
       }
 
-      const imageUrlWithTimestamp = `${imageUrl}?t=${new Date().getTime()}`;
-
-      console.log("Final Image URL:", imageUrlWithTimestamp);
-      console.log("Final Image URL:", imageUrl);
       const updatedData = { ...formData, image: imageUrl };
       console.log("Updated Data:", updatedData);
+
       if (recipeId) {
         const updatedRecipe = await updateRecipe(Number(recipeId), updatedData);
         alert(`Recipe "${updatedRecipe.title}" updated successfully!`);
@@ -117,7 +138,7 @@ const UpdateRecipe: React.FC = () => {
         const newRecipe = await createRecipe(updatedData);
         alert(`Recipe "${newRecipe.title}" created successfully!`);
       }
-      navigate(`/recipes/${recipeId }`);
+      navigate(`/recipes/${recipeId}`);
     } catch (error) {
       console.error("Error updating recipe:", error);
       alert("Failed to update recipe.");
@@ -155,7 +176,7 @@ const UpdateRecipe: React.FC = () => {
             placeholder="Recipe instructions (comma-separated)"
           />
           <input
-             type="text"
+            type="text"
             name="cookingTime"
             value={formData.cookingTime}
             onChange={handleChange}
@@ -176,7 +197,41 @@ const UpdateRecipe: React.FC = () => {
               <img src={formData.image} alt="Current Recipe" width="200" />
             </div>
           )}
+          <div>
+            <p>
+              <b>Select Tags:</b>
+            </p>
+            {TAGS.map((tag) => (
+              <label key={tag}>
+                <input
+                  type="checkbox"
+                  value={tag}
+                  checked={formData.tags.includes(tag)}
+                  onChange={() => handleTagChange(tag)}
+                />
+                {tag}
+              </label>
+            ))}
+          </div>
 
+          <div>
+            <p>
+              <b>Select Cuisine:</b>
+            </p>
+            <select
+              name="cuisine"
+              value={formData.cuisine}
+              onChange={handleSelectChange}
+            
+            >
+              <option value="">Select Cuisine</option>
+              {CUISINES.map((cuisine) => (
+                <option key={cuisine} value={cuisine}>
+                  {cuisine}
+                </option>
+              ))}
+            </select>
+          </div>
           <button type="submit"> Update</button>
         </div>
       </form>

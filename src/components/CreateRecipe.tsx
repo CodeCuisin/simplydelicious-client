@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Recipe } from "../pages/types";
+import { Cuisine, Recipe, Tag } from "../pages/types";
 import { createRecipe } from "../utils/recipe.routes";
 import "./recipe.css";
 import axios from "axios";
@@ -28,14 +28,13 @@ export const uploadToCloudinary = async (file: File) => {
     throw new Error("Failed to upload image.");
   }
 };
+const TAGS: Tag[] = ["LUNCH", "BREAKFAST", "DINNER", "DESSERT", "SNACKS"];
+const CUISINES: Cuisine[] = ["INDIAN", "ITALIAN", "MEXICAN", "FRENCH", "ARAB"];
 
 const CreateRecipe: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  console.log(user);
-  const authorId = user ? user.id : 0;
-  console.log(authorId);
-  const authorObj = user ; 
+  const authorObj = user;
   console.log(authorObj);
 
   const [formData, setFormData] = useState<
@@ -47,6 +46,8 @@ const CreateRecipe: React.FC = () => {
     instructions: [""],
     image: "",
     cookingTime: "",
+    tags: [] as Tag[],
+    cuisine: "" as Cuisine,
     serving: 0,
     author: authorObj,
   });
@@ -95,6 +96,22 @@ const CreateRecipe: React.FC = () => {
     }));
   };
 
+  const handleTagChange = (tag: Tag) => {
+    setFormData((prev) => ({
+      ...prev,
+      tags: prev.tags.includes(tag)
+        ? prev.tags.filter((t) => t !== tag) // Remove if exists
+        : [...prev.tags, tag], // Add if not exists
+    }));
+  };
+
+  const handleCuisineChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      cuisine: e.target.value as Cuisine,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("this is newrecipeeeeeeeee");
@@ -105,8 +122,12 @@ const CreateRecipe: React.FC = () => {
         imageUrl = await uploadToCloudinary(image);
       }
 
-      const newRecipe = await createRecipe({ ...formData, image: imageUrl,author: authorObj, });
-      console.log("this is newrecipeeeeeeeee",newRecipe);
+      const newRecipe = await createRecipe({
+        ...formData,
+        image: imageUrl,
+        author: authorObj,
+      });
+      console.log("this is newrecipeeeeeeeee", newRecipe);
       alert(`Recipe ${newRecipe.title} created!`);
       setFormData({
         title: "",
@@ -116,6 +137,8 @@ const CreateRecipe: React.FC = () => {
         image: "",
         cookingTime: "",
         serving: 0,
+        tags: [],
+        cuisine: "",
         author: authorObj,
       });
       setImage(null); // Reset image state
@@ -184,7 +207,41 @@ const CreateRecipe: React.FC = () => {
             placeholder="Serving "
             required
           />
+          <div>
+            <p>
+              <b>Select Tags:</b>
+            </p>
+            {TAGS.map((tag) => (
+              <label key={tag}>
+                <input
+                  type="checkbox"
+                  value={tag}
+                  checked={formData.tags.includes(tag)}
+                  onChange={() => handleTagChange(tag)}
+                />
+                {tag}
+              </label>
+            ))}
+          </div>
 
+          <div>
+            <p>
+              <b>Select Cuisine:</b>
+            </p>
+            <select
+              name="cuisine"
+              value={formData.cuisine}
+              onChange={handleCuisineChange}
+              required
+            >
+              <option value="">Select Cuisine</option>
+              {CUISINES.map((cuisine) => (
+                <option key={cuisine} value={cuisine}>
+                  {cuisine}
+                </option>
+              ))}
+            </select>
+          </div>
           <button type="submit"> Create Recipe</button>
         </div>
       </form>
