@@ -8,10 +8,17 @@ import {
 import "./recipe.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { uploadToCloudinary } from "./CreateRecipe";
+import { useAuth } from "../context/auth.context";
 
 const UpdateRecipe: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
+  const { user } = useAuth();
   const navigate = useNavigate();
+  console.log(user)
+  const authorId = user ? user.id : 0;
+  console.log(authorId)
+  const authorObj = user;
+  console.log(authorObj)
 
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt">
@@ -23,7 +30,7 @@ const UpdateRecipe: React.FC = () => {
     image: "",
     cookingTime: "",
     serving: 0,
-    authorId: user?.id || null,
+    author: authorObj,
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -48,7 +55,7 @@ const UpdateRecipe: React.FC = () => {
           image: existingRecipe.image || "",
           cookingTime: existingRecipe.cookingTime || "",
           serving: existingRecipe.serving || 0,
-          authorId: user?.id || null,
+          author: authorObj,
         });
       } catch (error) {
         console.error("Error fetching recipe:", error);

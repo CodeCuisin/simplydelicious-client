@@ -4,16 +4,21 @@ import { createRecipe } from "../utils/recipe.routes";
 import "./recipe.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../context/auth.context";
 
 export const uploadToCloudinary = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET);
- 
+  formData.append(
+    "upload_preset",
+    import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET
+  );
+
   try {
     const { data } = await axios.post(
-      `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME
+      }/image/upload`,
       formData
     );
 
@@ -25,8 +30,14 @@ export const uploadToCloudinary = async (file: File) => {
 };
 
 const CreateRecipe: React.FC = () => {
-  
+  const { user } = useAuth();
   const navigate = useNavigate();
+  console.log(user);
+  const authorId = user ? user.id : 0;
+  console.log(authorId);
+  const authorObj = user ; 
+  console.log(authorObj);
+
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt">
   >({
@@ -37,10 +48,10 @@ const CreateRecipe: React.FC = () => {
     image: "",
     cookingTime: "",
     serving: 0,
-    authorId: user?.id || null,
+    author: authorObj,
   });
   const [image, setImage] = useState<File | null>(null);
- 
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -48,7 +59,7 @@ const CreateRecipe: React.FC = () => {
     if (name === "serving") {
       setFormData((prev) => ({
         ...prev,
-        [name]: value ? parseInt(value) : 0, 
+        [name]: value ? parseInt(value) : 0,
       }));
     } else {
       setFormData((prev) => ({
@@ -64,7 +75,9 @@ const CreateRecipe: React.FC = () => {
     }
   };
 
-  const handleIngredientsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleIngredientsChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const value = e.target.value;
     setFormData((prev) => ({
       ...prev,
@@ -72,7 +85,9 @@ const CreateRecipe: React.FC = () => {
     }));
   };
 
-  const handleInstructionsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInstructionsChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const value = e.target.value;
     setFormData((prev) => ({
       ...prev,
@@ -82,7 +97,7 @@ const CreateRecipe: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   
+    console.log("this is newrecipeeeeeeeee");
     try {
       let imageUrl = "";
 
@@ -90,7 +105,8 @@ const CreateRecipe: React.FC = () => {
         imageUrl = await uploadToCloudinary(image);
       }
 
-      const newRecipe = await createRecipe({ ...formData, image: imageUrl,authorId: user?.id || null, });
+      const newRecipe = await createRecipe({ ...formData, image: imageUrl,author: authorObj, });
+      console.log("this is newrecipeeeeeeeee",newRecipe);
       alert(`Recipe ${newRecipe.title} created!`);
       setFormData({
         title: "",
@@ -100,7 +116,7 @@ const CreateRecipe: React.FC = () => {
         image: "",
         cookingTime: "",
         serving: 0,
-        authorId: user?.id || null,
+        author: authorObj,
       });
       setImage(null); // Reset image state
       navigate("/recipes");
