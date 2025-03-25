@@ -5,11 +5,15 @@ import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
 import { Link } from "react-router-dom";
 import { Navbar } from "./Navbar";
+import Searchbar from "./searchbar";
+
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const RecipeList = async () => {
@@ -18,6 +22,7 @@ const Recipes: React.FC = () => {
         console.log("Fetched Recipes:", data);
         if (data.length > 0) {
           setRecipes(data);
+          setFilteredRecipes(data);
         } else {
           console.warn("No recipes found, state not updating.");
         }
@@ -31,13 +36,26 @@ const Recipes: React.FC = () => {
     RecipeList();
   }, []);
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    const filtered = recipes.filter(
+      (recipe) =>
+        recipe.title.toLowerCase().includes(query.toLowerCase()) ||
+        recipe.ingredients.some((ingredient: string) =>
+          ingredient.toLowerCase().includes(query.toLowerCase())
+        )
+    );
+    setFilteredRecipes(filtered);
+  };
+
+
   return (
     <div className="recipe-page">
       <Sidebar />
       <div className="content-container">
         <Navbar />
-
-        <div className="recipe-content">
+        <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch}/>
+       <div className="recipe-content">
           <h1 className="recipe-title"> Available Recipes </h1>
           {loading ? (
             <p>Loading...</p>
@@ -45,10 +63,10 @@ const Recipes: React.FC = () => {
             <p>{error}</p>
           ) : (
             <div className="dishes">
-              {recipes.length === 0 ? (
+               {filteredRecipes.length === 0 ? (
                 <p>No recipes found.</p>
               ) : (
-                recipes.map((recipeObj) => {
+                filteredRecipes.map((recipeObj) => {
                   console.log("Recipe Image URL: ", recipeObj.image);
                   return (
                     <div className="recipe-card" key={recipeObj.id}>
@@ -62,13 +80,20 @@ const Recipes: React.FC = () => {
                           width="300"
                           key={recipeObj.image}
                           onError={(e) => {
-                            e.currentTarget.src = "/default-image.jpg"; // Fallback image if the image fails to load
+                            e.currentTarget.src = "/default-image.jpg"; // Fallback image if image fails to load
                           }}
                         />
                       ) : (
                         <p>No image available</p>
                       )}
                       <p>Cooking Time: {recipeObj.cookingTime}</p>
+                      <div className="label-container"> {recipeObj.tags.map(
+                      (tags: string, index: number) => (
+                        <label className= "label" key={index}>{tags}</label>
+                      )
+                    )}
+                  <label  className= "label">{recipeObj.cuisine}</label></div>
+                     
                       <Link to={`/recipes/${recipeObj.id}`}>
                         <button>More</button>
                       </Link>
