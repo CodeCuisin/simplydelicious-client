@@ -10,3 +10,11 @@ export type Recipe = {
   createdAt: Date;
   updatedAt: Date;
 };
+export type User = {
+  id: number | String;
+  name: string;
+  email: string;
+  password: string;
+  bio?: string | null; 
+  image?: string | null; 
+};
