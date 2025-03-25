@@ -9,6 +9,7 @@ export type Recipe = {
   serving?: number;
   createdAt: Date;
   updatedAt: Date;
+  authorId: number | string | null;
 };
 export type User = {
   id: number | String;

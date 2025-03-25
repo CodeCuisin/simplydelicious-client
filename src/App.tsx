@@ -5,6 +5,7 @@ import Recipes from "./components/Recipes";
 import CreateRecipe from "./components/CreateRecipe";
 import UpdateRecipe from "./components/UpdateRecipe";
 import Recipedetails from "./components/Recipedetails";
+import UserProfile from"./components/UserProfile.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/recipes/:recipeId" element={<Recipedetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Signup" element={<Signup/>} />
+        <Route path="/users/userId:" element={<UserProfile/>} />
       </Routes>
     </>
   );

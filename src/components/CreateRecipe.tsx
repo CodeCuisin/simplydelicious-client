@@ -37,6 +37,7 @@ const CreateRecipe: React.FC = () => {
     image: "",
     cookingTime: "",
     serving: 0,
+    authorId: user?.id || null,
   });
   const [image, setImage] = useState<File | null>(null);
  
@@ -89,7 +90,7 @@ const CreateRecipe: React.FC = () => {
         imageUrl = await uploadToCloudinary(image);
       }
 
-      const newRecipe = await createRecipe({ ...formData, image: imageUrl });
+      const newRecipe = await createRecipe({ ...formData, image: imageUrl,authorId: user?.id || null, });
       alert(`Recipe ${newRecipe.title} created!`);
       setFormData({
         title: "",
@@ -99,6 +100,7 @@ const CreateRecipe: React.FC = () => {
         image: "",
         cookingTime: "",
         serving: 0,
+        authorId: user?.id || null,
       });
       setImage(null); // Reset image state
       navigate("/recipes");

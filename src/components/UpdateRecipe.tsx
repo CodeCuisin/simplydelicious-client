@@ -23,6 +23,7 @@ const UpdateRecipe: React.FC = () => {
     image: "",
     cookingTime: "",
     serving: 0,
+    authorId: user?.id || null,
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -47,6 +48,7 @@ const UpdateRecipe: React.FC = () => {
           image: existingRecipe.image || "",
           cookingTime: existingRecipe.cookingTime || "",
           serving: existingRecipe.serving || 0,
+          authorId: user?.id || null,
         });
       } catch (error) {
         console.error("Error fetching recipe:", error);
