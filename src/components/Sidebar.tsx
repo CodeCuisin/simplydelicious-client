@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
-
+import "./sidebar.css";
 
 type SidebarItem = {
   label: string;
@@ -46,6 +46,7 @@ const Sidebar: React.FC = () => {
         )}
       </ul>
     </div>
+  
   );
 };
 

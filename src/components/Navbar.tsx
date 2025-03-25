@@ -1,5 +1,5 @@
 import "./tailwind.css";
-
+import "./sidebar.css";
 
 
 export const Navbar: React.FC = () => {
