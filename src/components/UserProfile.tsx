@@ -12,7 +12,7 @@ const ProfilePage: React.FC = () => {
   const [updatedBio, setUpdatedBio] = useState<string>("");
 
   const { userId } = useParams<{ userId: string }>();
-  console.log(userId);
+  console.log("User ID from URL:", userId);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,6 +20,8 @@ const ProfilePage: React.FC = () => {
         const response = await axios.get<User>(`${API_URL}/users/${userId}`);
         setUser(response.data);
         setUpdatedBio(response.data.bio || "");
+        setError(null);
+      } catch (err) {
         setError("Error fetching user data");
       } finally {
         setLoading(false);
@@ -42,74 +44,81 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const imageBase64 = reader.result as string;
-        try {
-          if (!userId) {
-            console.error("User ID is missing");
-            return;
-          }
-          const updatedUser = await axios.put(`${API_URL}/users/${userId}`, {
-            image: imageBase64,
-          });
-          setUser(updatedUser.data);
-        } catch (error) {
-          setError("Error updating user image");
-        }
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "your_upload_preset");
+
+    try {
+      // 🔹 Upload to Cloudinary
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
+        formData
+      );
+
+      const imageUrl = uploadRes.data.secure_url;
+
+      // 🔹 Update user profile with new image URL
+      const updatedUser = await axios.put(`${API_URL}/users/${userId}`, {
+        image: imageUrl,
+      });
+
+      setUser(updatedUser.data);
+    } catch (error) {
+      setError("Error updating user image");
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="text-white text-center text-lg mt-10">Loading...</div>;
 
-  if (error) return <div>{error}</div>;
+  if (error) return <div className="text-red-500 text-center text-lg mt-10">{error}</div>;
 
-  if (!user) return <div>User not found</div>;
+  if (!user) return <div className="text-white text-center text-lg mt-10">User not found</div>;
 
   return (
-    <div className="max-w-4xl mx-auto bg-darkgreen text-white p-8 rounded-lg shadow-lg">
-      <div className="flex justify-center mb-6">
-        <img
-          src={user.image || "default-image-url.jpg"}
-          alt={user.name}
-          className="w-32 h-32 rounded-full border-4 border-lightgreen"
-        />
-      </div>
+    <div className="min-h-screen bg-darkgreen flex justify-center items-center p-6">
+      <div className="w-full max-w-3xl bg-green-900 text-white p-8 rounded-xl shadow-lg">
+        {/* Profile Image */}
+        <div className="flex flex-col items-center mb-6">
+          <img
+            src={user.image || "default-image-url.jpg"}
+            alt={user.name}
+            className="w-32 h-32 rounded-full border-4 border-lightgreen shadow-lg"
+          />
+          <h1 className="text-3xl font-bold text-lightgreen mt-4">{user.name}</h1>
+          <p className="text-lg text-gray-300">{user.email}</p>
+        </div>
 
-      <div className="text-center">
-        <h1 className="text-3xl font-semibold text-lightgreen">{user.name}</h1>
-        <p className="text-lg">{user.email}</p>
-      </div>
+        {/* Bio Section */}
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-lightgreen">Bio</h2>
+          <textarea
+            className="w-full p-3 mt-2 rounded-md text-darkgreen bg-white border border-lightgreen"
+            value={updatedBio}
+            onChange={(e) => setUpdatedBio(e.target.value)}
+            rows={4}
+          />
+          <button
+            className="w-full bg-lightgreen text-darkgreen font-bold py-2 px-4 rounded-lg mt-4 hover:bg-green-500 transition"
+            onClick={handleUpdateBio}
+          >
+            Update Bio
+          </button>
+        </div>
 
-      <div className="mt-6">
-        <h2 className="text-xl font-medium text-lightgreen">Bio</h2>
-        <textarea
-          className="w-full p-2 mt-2 rounded-lg text-darkgreen"
-          value={updatedBio}
-          onChange={(e) => setUpdatedBio(e.target.value)}
-          rows={4}
-        />
-        <button
-          className="bg-darkgreen text-white p-2 rounded-lg mt-4 hover:bg-lightgreen"
-          onClick={handleUpdateBio}
-        >
-          Update Bio
-        </button>
-      </div>
-
-      <div className="mt-6">
-        <h2 className="text-xl font-medium text-lightgreen">Profile Image</h2>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="p-2 border border-lightgreen rounded-lg mt-4"
-        />
+        {/* Image Upload Section */}
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-lightgreen">Profile Image</h2>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-2 p-2 w-full bg-white text-darkgreen border border-lightgreen rounded-lg"
+          />
+        </div>
       </div>
     </div>
   );
