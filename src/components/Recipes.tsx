@@ -5,7 +5,7 @@ import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
 import { Link } from "react-router-dom";
 import { Navbar } from "./Navbar";
-import Searchbar from "./searchbar";
+import Searchbar from "./Searchbar";
 
 
 const Recipes: React.FC = () => {
