@@ -4,6 +4,8 @@ import { getUserById, updateUser } from "../utils/user.routes";
 import { User } from "../pages/types";
 import { useAuth } from "../context/auth.context";
 import { uploadToCloudinary } from "./CreateRecipe";
+import axios from "axios";
+import { Navbar } from "./Navbar";
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -11,10 +13,11 @@ const ProfilePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [updatedBio, setUpdatedBio] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
-
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: loggedInUser } = useAuth();
+  const { logOutUser } = useAuth();
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -22,7 +25,7 @@ const ProfilePage: React.FC = () => {
         const data = await getUserById(Number(userId));
         if (data) {
           setUser(data);
-          setUpdatedBio(data.bio || ""); // Ensure bio is set properly
+          setUpdatedBio(data.bio || "");
         } else {
           setError("User not found");
         }
@@ -39,7 +42,8 @@ const ProfilePage: React.FC = () => {
     if (!user) return;
     try {
       const updatedUser = await updateUser(user.id, { bio: updatedBio });
-      setUser(updatedUser); // Update the user with the new bio
+      setUser(updatedUser);
+      setUpdatedBio("");
     } catch (error) {
       setError("Error updating bio");
     }
@@ -60,12 +64,53 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  if (loading) return <div className="text-white text-center text-lg mt-10">Loading...</div>;
-  if (error) return <div className="text-red-500 text-center text-lg mt-10">{error}</div>;
-  if (!user) return <div className="text-white text-center text-lg mt-10">User not found</div>;
+  if (loading)
+    return (
+      <div className="text-white text-center text-lg mt-10">Loading...</div>
+    );
+  if (error)
+    return (
+      <div className="text-red-500 text-center text-lg mt-10">{error}</div>
+    );
+  if (!user)
+    return (
+      <div className="text-white text-center text-lg mt-10">User not found</div>
+    );
+    const handleDeleteAccount = async () => {
+      if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        try {
+          // Check if token is available
+          const storedToken = localStorage.getItem('authToken');
+          if (!storedToken) {
+            throw new Error('No token found');
+          }
+    
+          // Make API call to delete the user account
+          const response = await axios.delete(`http://localhost:5005/users/${loggedInUser.id}`, {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,  // Include token in headers
+            },
+          });
+    
+          if (response.status === 200) {
+            alert("Your account has been deleted.");
+            logOutUser(); // Log out the user after deletion
+            navigate('/'); // Redirect to home or login page
+          } else {
+            alert('Failed to delete account');
+          }
+        } catch (error) {
+          console.error("Error deleting account: ", error);
+          alert('Error deleting account. Please try again.');
+        }
+      }
+    };
+    
 
   return (
+    
     <div className="flex flex-col items-center min-h-screen bg-darkgreen p-4">
+      <Navbar />
       <div className="bg-green-900 text-white p-8 rounded-xl shadow-lg w-full max-w-3xl">
         <div className="flex flex-col items-center mb-6">
           <img
@@ -73,23 +118,22 @@ const ProfilePage: React.FC = () => {
             alt={user.name}
             className="w-32 h-32 rounded-full border-4 border-lightgreen shadow-lg object-cover"
           />
-          <h1 className="text-3xl font-bold text-lightgreen mt-4">{user.name}</h1>
+          <h1 className="text-3xl font-bold text-lightgreen mt-4">
+            {user.name}
+          </h1>
           <p className="text-lg text-gray-300">{user.email}</p>
 
-          {/* Display Bio under Email */}
-          {user.bio && (
-            <p className="text-md text-gray-300 mt-4">{user.bio}</p>
-          )}
+          {user.bio && <p className="text-md text-gray-300 mt-4">{user.bio}</p>}
         </div>
 
         <div className="mt-6 w-full">
           <h2 className="text-xl font-semibold text-lightgreen">Bio</h2>
           <textarea
-          className="w-full p-3 mt-2 rounded-md text-darkgreen bg-lightgreen border border-lightgreen resize-none"
-             value={updatedBio || ""}
-                onChange={(e) => setUpdatedBio(e.target.value)}
-                rows={4}
-            />
+            className="w-full p-3 mt-2 rounded-md text-darkgreen bg-lightgreen border border-lightgreen resize-none"
+            value={updatedBio || ""}
+            onChange={(e) => setUpdatedBio(e.target.value)}
+            rows={4}
+          />
 
           <button
             className="w-full bg-lightgreen text-darkgreen font-bold py-2 px-4 rounded-lg mt-4 hover:bg-green-500 transition"
@@ -100,7 +144,9 @@ const ProfilePage: React.FC = () => {
         </div>
 
         <div className="mt-6 w-full">
-          <h2 className="text-xl font-semibold text-lightgreen">Profile Image</h2>
+          <h2 className="text-xl font-semibold text-lightgreen">
+            Profile Image
+          </h2>
           <input
             type="file"
             accept="image/*"
@@ -111,17 +157,15 @@ const ProfilePage: React.FC = () => {
 
         {loggedInUser && user.id === loggedInUser.id && (
           <div className="mt-6 flex gap-4">
-            <button className="w-1/2 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
-              Edit Profile
-            </button>
-            <button className="w-1/2 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition">
+            <button className="w-1/2 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition"
+            onClick={handleDeleteAccount}>
               Delete Account
             </button>
           </div>
         )}
       </div>
     </div>
-);
+  );
 };
 
 export default ProfilePage;

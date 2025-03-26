@@ -29,13 +29,31 @@ export const updateUser = async (
   updatedUser: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>
 ): Promise<User> => {
   try {
-    const response = await axios.put(`${API_URL}/users/${userId}`, updatedUser);
+    const token = localStorage.getItem("authToken"); // Get the token
+
+    if (!token) {
+      console.error("No token found in localStorage");
+      throw new Error("No authentication token found");
+    }
+
+    const response = await axios.put(
+      `${API_URL}/users/${userId}`,
+      updatedUser,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,  // ensuring that the token is included in the Auth header
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.error("Error updating user:", error);
     throw new Error("Unable to update user.");
   }
 };
+
 
 export const deleteUser = async (userId: number): Promise<void> => {
   try {

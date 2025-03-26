@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import Searchbar from "./Searchbar";
 
+
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
@@ -86,14 +87,18 @@ const Recipes: React.FC = () => {
                       )}
                       <p>Cooking Time: {recipeObj.cookingTime}</p>
                       <div className="label-container">
-                        {" "}
-                        {recipeObj.tags.map((tags: string, index: number) => (
-                          <label className="label" key={index}>
-                            {tags}
-                          </label>
-                        ))}
+                        {recipeObj.tags && Array.isArray(recipeObj.tags) ? (
+                          recipeObj.tags.map((tag: string, index: number) => (
+                            <label className="label" key={index}>
+                              {tag}
+                            </label>
+                          ))
+                        ) : (
+                          <p>No tags available</p>
+                        )}
                         <label className="label">{recipeObj.cuisine}</label>
                       </div>
+
                       <Link to={`/recipes/${recipeObj.id}`}>
                         <button>More</button>
                       </Link>
