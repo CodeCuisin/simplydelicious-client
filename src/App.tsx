@@ -9,6 +9,7 @@ import UserProfile from"./components/UserProfile.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import Category from "./pages/Category.tsx";
+import PopularRecipes from "./pages/PopularRecipe.tsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Signup" element={<Signup/>} />
         <Route path="/users/:userId" element={<UserProfile/>} />
         <Route path="/categories" element={<Category/>} />
+        <Route path="/popular" element={<PopularRecipes/>} />
       </Routes>
     </>
   );
