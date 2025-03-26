@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
 
 
   return (
-    <div className="bg-green-950 w-80">
+    <div className="bg-green-950 w-80 ">
         <div className="gif-container mb-4 m-6">
         <img
           className="w-58 h-60 object-cover rounded-2xl"
@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
           onError={() => alert("Error loading GIF!")}
         />
       </div>
-      <ul className="m-8">
+      <ul className="m-8 ">
         <Link to="/recipes">
           <button className="main"> Home 🏠︎</button>
         </Link>
