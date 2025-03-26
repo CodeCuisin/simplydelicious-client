@@ -5,6 +5,7 @@ import { User } from "../pages/types";
 import { useAuth } from "../context/auth.context";
 import { uploadToCloudinary } from "./CreateRecipe";
 import axios from "axios";
+import { Navbar } from "./Navbar";
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -107,7 +108,9 @@ const ProfilePage: React.FC = () => {
     
 
   return (
+    
     <div className="flex flex-col items-center min-h-screen bg-darkgreen p-4">
+      <Navbar />
       <div className="bg-green-900 text-white p-8 rounded-xl shadow-lg w-full max-w-3xl">
         <div className="flex flex-col items-center mb-6">
           <img

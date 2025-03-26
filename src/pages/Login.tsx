@@ -24,7 +24,7 @@ function Signin() {
       const response = await axios.post(`http://localhost:5005/auth/login`, requestBody);
       console.log("JWT token", response.data.authToken);
       storeToken(response.data.authToken);
-      navigate("/");
+      navigate("/recipes");
     } catch (error: any) {
       const errorDescription = error.response?.data?.message || "Invalid email or password. Please try again.";
       setErrorMessage(errorDescription);
