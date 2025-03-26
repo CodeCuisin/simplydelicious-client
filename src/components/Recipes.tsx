@@ -52,7 +52,7 @@ const Recipes: React.FC = () => {
     <div className="recipe-page">
       <Sidebar />
       <div className="content-container">
-        <Navbar />
+      <Navbar />
         <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch} />
         <div className="recipe-content">
           <h1 className="recipe-title"> Available Recipes </h1>
