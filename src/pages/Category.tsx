@@ -60,10 +60,12 @@ useEffect(() => {
             <div key={tag} className="mb-6">
               <h2 className="text-xl font-semibold mb-2">{tag}</h2>
               <ul className="list-disc pl-6">
-                {recipes.map((recipe) => (
-                  <li key={recipe.id} className="p-2 border-b">
-                    {recipe.title}
-                  </li>
+                {recipes.map((recipeObj) => (
+                    <div className="p-2 border-b">
+                  <li key={recipeObj.id} >
+                    {recipeObj.title}</li>
+                    <img src={recipeObj.image ?? "https://via.placeholder.com/150"} alt={recipeObj.title} className= "w-50 rounded-lg"/>
+                  </div>
                 ))}
               </ul>
             </div>
