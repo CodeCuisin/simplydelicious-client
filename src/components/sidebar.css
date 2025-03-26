@@ -30,7 +30,7 @@
 
 .sidebar-link {
     text-decoration: none;
-}*/
+}
 
 .navbar {
     background-color: rgb(11, 49, 11); 
@@ -51,26 +51,12 @@
     width: 300px;
     padding: 10px;
     font-size: 16px;
-    border: 2px solid #ccc;
+    border: 2px solid #cccccc;
     border-radius: 5px;
     outline: none;
-  }
+  }*/
   
-  .search-bar button {
-    padding: 10px 15px;
-    margin-left: 10px;
-    font-size: 16px;
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .search-bar button:hover {
-    background-color: #e55d00;
-  }
+ 
    
   
     

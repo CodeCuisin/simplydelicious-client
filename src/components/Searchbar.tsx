@@ -1,5 +1,5 @@
 import React from "react";
-import "./sidebar.css";
+
 
 interface SearchbarProps {
   searchQuery: string;
@@ -8,8 +8,8 @@ interface SearchbarProps {
 
 const Searchbar: React.FC<SearchbarProps> = ({ searchQuery, setSearchQuery }) => {
   return (
-    <form className="search-bar" onSubmit={(e) => e.preventDefault()}>🔎
-      <input
+    <form className="m-20" onSubmit={(e) => e.preventDefault()}>🔎
+      <input className="border-2 border-double w-100 h-10 p-5 text-xl "
         type="text"
         placeholder="Search recipes..."
         value={searchQuery}
