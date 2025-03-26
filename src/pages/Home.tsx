@@ -7,7 +7,7 @@ import simplydelicious from "../assets/Simplydelicious.gif";
 function Home() {
   return (
     <div className="bg-black text-white">
-          <div className="gif-container mb-4 flex flex-row p-10 ps-10">
+          <div className="gif-container mb-4 flex flex-row p-10 ps-10 ">
         <img
           className="w-50 h-50 object-cover rounded-2xl"
           src={simplydelicious} 
@@ -15,7 +15,7 @@ function Home() {
           onError={() => alert("Error loading GIF!")}
         />
     
-      <h1 className="text-7xl pe-150 italic"> Simply Delicious </h1> 
+      <h1 className="text-7xl pl-100 italic"> Simply Delicious </h1> 
       </div>
       <div className="flex flex-row ">
         <div className="w-400 p-10">
