@@ -5,8 +5,7 @@ import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
 import { Link } from "react-router-dom";
 import { Navbar } from "./Navbar";
-import Searchbar from "./searchbar";
-
+import Searchbar from "./Searchbar";
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -48,14 +47,13 @@ const Recipes: React.FC = () => {
     setFilteredRecipes(filtered);
   };
 
-
   return (
     <div className="recipe-page">
       <Sidebar />
       <div className="content-container">
         <Navbar />
-        <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch}/>
-       <div className="recipe-content">
+        <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch} />
+        <div className="recipe-content">
           <h1 className="recipe-title"> Available Recipes </h1>
           {loading ? (
             <p>Loading...</p>
@@ -63,7 +61,7 @@ const Recipes: React.FC = () => {
             <p>{error}</p>
           ) : (
             <div className="dishes">
-               {filteredRecipes.length === 0 ? (
+              {filteredRecipes.length === 0 ? (
                 <p>No recipes found.</p>
               ) : (
                 filteredRecipes.map((recipeObj) => {
@@ -87,13 +85,15 @@ const Recipes: React.FC = () => {
                         <p>No image available</p>
                       )}
                       <p>Cooking Time: {recipeObj.cookingTime}</p>
-                      <div className="label-container"> {recipeObj.tags.map(
-                      (tags: string, index: number) => (
-                        <label className= "label" key={index}>{tags}</label>
-                      )
-                    )}
-                  <label  className= "label">{recipeObj.cuisine}</label></div>
-                     
+                      <div className="label-container">
+                        {" "}
+                        {recipeObj.tags.map((tags: string, index: number) => (
+                          <label className="label" key={index}>
+                            {tags}
+                          </label>
+                        ))}
+                        <label className="label">{recipeObj.cuisine}</label>
+                      </div>
                       <Link to={`/recipes/${recipeObj.id}`}>
                         <button>More</button>
                       </Link>

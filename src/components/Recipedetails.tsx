@@ -6,6 +6,9 @@ import Sidebar from "./Sidebar";
 import { Navbar } from "./Navbar";
 import "./recipedetails.css";
 import { useAuth } from "../context/auth.context";
+import "tailwindcss";
+
+
 
 const Recipedetails: React.FC = () => {
   console.log("Rendering Recipes Component");
@@ -44,96 +47,83 @@ const Recipedetails: React.FC = () => {
   };
 
   return (
-    <div className="layout">
-      <Sidebar />
-      <div className="main-content">
-        <Navbar />
-        <div className="recipe-containers">
-          {recipes.length === 0 ? (
-            <p>No recipes found.</p>
-          ) : (
-            recipes.map((recipeObj) => (
-              <div key={recipeObj.id} className="recipe-cards">
-                <div className="recipe-images">
-                  {recipeObj.image ? (
-                    <img
-                      src={recipeObj.image}
-                      alt={recipeObj.title}
-                      width="250px"
-                    />
-                  ) : (
-                    <p>No image available</p>
-                  )}
+    <div className="layouts">
+    <Sidebar />
+    <div className="containers">
+      <Navbar />
+
+      <div className="bg-Fuchsia-200">
+        {recipes.length === 0 ? (
+          <p>No recipes found.</p>
+        ) : (
+          recipes.map((recipeObj) => (
+            <div key={recipeObj.id} className="recipe-cards">
+              {user && recipeObj.author?.id === user.id && (
+                <div className="action-buttons">
+                  <Link to={`/recipes/${recipeObj.id}/update`}>
+                    <button className="bg-green-600">Update Recipe</button>
+                  </Link>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(recipeObj.id)}
+                  >
+                    Delete Recipe
+                  </button>
                 </div>
-                <div className="recipe-contents">
-                  <h1>
-                    <strong>{recipeObj.title}</strong>
-                  </h1>
-                  <p>
-                    <b>Description:</b> {recipeObj.description}
-                  </p>
-                  <p>
-                    <b>Ingredients:</b>{" "}
-                  </p>
-                  <ul>
-                    {recipeObj.ingredients.map(
-                      (ingredient: string, index: number) => (
+              )}
+
+              <div className="recipe-body">
+                <div className="left-section">
+                  <div className="recipe-images">
+                    {recipeObj.image ? (
+                      <img
+                        src={recipeObj.image}
+                        alt={recipeObj.title}
+                      />
+                    ) : (
+                      <p>No image available</p>
+                    )}
+                 
+                 </div>
+                  <div className="ingredients">
+                    <p><b>Ingredients:</b></p>
+                    <ol className="list-(--my-marker) ...">
+                      {recipeObj.ingredients.map((ingredient, index) => (
                         <li key={index}>{ingredient}</li>
-                      )
-                    )}
-                  </ul>
-                  <p>
-                    <b>Instructions:</b>
-                  </p>
-                  <ul className="instructions-lists">
-                    {recipeObj.instructions.map(
-                      (instruction: string, index: number) => (
-                        <li key={index}>{instruction}</li>
-                      )
-                    )}
-                  </ul>
-                  <p>
-                    <b>Cooking Time:</b>
-                    {recipeObj.cookingTime}{" "}
-                  </p>
-                  <p>
-                    <b>Serving:</b> {recipeObj.serving}
-                  </p>
-                  <div className="label-container">
-                    {" "}
-                    {recipeObj.tags.map((tags: string, index: number) => (
-                      <label className="label" key={index}>
-                        {tags}
-                      </label>
+                      ))}
+                    </ol>
+                    </div>
+                 
+                </div>
+
+                <div className="right-section">
+                  <h1><strong>{recipeObj.title}</strong></h1>
+                  <p><b>Description:</b> {recipeObj.description}</p>
+                  <p><b>Cooking Time:</b> {recipeObj.cookingTime}</p>
+                  <p><b> 🍽️ Serving:</b> {recipeObj.serving}</p>
+
+                  <div className="label-containers">
+                    {recipeObj.tags.map((tag, index) => (
+                      <label className="label" key={index}>{tag}</label>
                     ))}
                     <label className="label">{recipeObj.cuisine}</label>
                   </div>
-                  {/* Debugging to check the `user` and `recipeObj.author` 
-<p>Current User ID: {user?.id}</p>
-                  <p>Author ID: {recipeObj.author?.id}</p>*/}
 
-                  {user &&
-                    recipeObj.author &&
-                    recipeObj.author.id === user.id && (
-                      <div>
-                        <Link to={`/recipes/${recipeObj.id}/update`}>
-                          <button className="update-btn">Update Recipe</button>
-                        </Link>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDelete(recipeObj.id)}
-                        >
-                          Delete Recipe
-                        </button>
-                      </div>
-                    )}
+                  <p><b> 🧑‍🍳 Instructions:</b></p>
+                  <ul className="list-decimal">
+                    {recipeObj.instructions.map((instruction, index) => (
+                      <li key={index}>{instruction}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 };
+
 export default Recipedetails;
