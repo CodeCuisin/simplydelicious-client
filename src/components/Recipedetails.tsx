@@ -47,29 +47,29 @@ const Recipedetails: React.FC = () => {
   };
 
   return (
-    <div className="flex w-500 h-250">
+    <div className="flex w-500 h-260 overflow-auto">
       <Sidebar />
       <div className="w-400">
         <Navbar />
 
-        <div className="bg-pink-50 h-250">
+        <div className="bg-pink-50 top-0 h-235 overflow-auto">
           {recipes.length === 0 ? (
             <p>No recipes found.</p>
           ) : (
             recipes.map((recipeObj) => (
               <div key={recipeObj.id} className="recipe-cards">
                 {user && recipeObj.author?.id === user.id && (
-                  <div className="flex flex-row-reverse m-5 gap-5 ">
+                  <div className="flex flex-row-reverse mt-2 mr-8 gap-5 ">
                     <button
                       className="delete-btn"
                       onClick={() => handleDelete(recipeObj.id)}
                     >
-                      <img className="w-15 mt-1" src={redbtn} />{" "}
+                      <img className="w-15 " src={redbtn} />{" "}
                     </button>
                     <Link to={`/recipes/${recipeObj.id}/update`}>
                       <button>
                         {" "}
-                        <img className="w-15 mt-2 " src={bluebtn} />{" "}
+                        <img className="w-15 " src={bluebtn} />{" "}
                       </button>
                     </Link>
                   </div>
@@ -77,18 +77,18 @@ const Recipedetails: React.FC = () => {
 
                 <div className="flex ">
                   <div className="flex flex-col w-180 ml-10">
-                    <div className="w-50 ">
+                    <div className=" ">
                       {recipeObj.image ? (
-                        <img src={recipeObj.image} alt={recipeObj.title} />
+                        <img className= "w-50 rounded-lg" src={recipeObj.image} alt={recipeObj.title} />
                       ) : (
                         <p>No image available</p>
                       )}
                     </div>
-                    <div className="">
+                    <div className="w-100 p-2">
                       <p>
                         <b>Ingredients:</b>
                       </p>
-                      <ol className="list-(--my-marker) ...">
+                      <ol className="list-(--my-marker) font-semibold">
                         {recipeObj.ingredients.map((ingredient, index) => (
                           <li key={index}>{ingredient}</li>
                         ))}
@@ -97,11 +97,11 @@ const Recipedetails: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col w-400">
-                    <h1 className="text-5xl pb-10 ">
+                    <h1 className="text-4xl font-bold pb-4 ">
                     {recipeObj.title}
                     </h1>
-                    <p className="font-bold pb-2">
-                      Description: </p><p className="pb-2 w-250"> {recipeObj.description}</p>
+                    <p className="text-xl font-bold pb-2">
+                      Description: </p><p className="pb-2 font-semibold w-250"> {recipeObj.description}</p>
                    
                     <p className="font-bold pb-2">
                        ⏳ Cooking Time: {recipeObj.cookingTime}
@@ -110,21 +110,21 @@ const Recipedetails: React.FC = () => {
                      🍽️ Serving: {recipeObj.serving}
                     </p>
 
-                    <div className="font-semibold p-4">
+                    <div className="font-semibold p-2">
                       {recipeObj.tags.map((tag, index) => (
                         <label  className="bg-fuchsia-200 p-2 m-4 rounded-lg" key={index}>
                           {tag}
                         </label>
                       ))}
-                      <label className="label">{recipeObj.cuisine}</label>
+                      <label className="bg-indigo-200 p-2 m-2 rounded-lg">{recipeObj.cuisine}</label>
                     </div>
 
-                    <p>
-                      <b> 🧑‍🍳 Instructions:</b>
+                    <p className="font-bold p-2">
+                       🧑‍🍳 Instructions:
                     </p>
-                    <ul className="list-decimal">
+                    <ul className="list-decimal flex flex-col gap-2">
                       {recipeObj.instructions.map((instruction, index) => (
-                        <li key={index}>{instruction}</li>
+                        <li className="p-2 font-semibold bg-sky-50 w-fit rounded-lg shadow-xl "key={index}>{instruction}</li>
                       ))}
                     </ul>
                   </div>
