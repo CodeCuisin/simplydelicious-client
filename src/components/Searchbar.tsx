@@ -8,7 +8,7 @@ interface SearchbarProps {
 
 const Searchbar: React.FC<SearchbarProps> = ({ searchQuery, setSearchQuery }) => {
   return (
-    <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
+    <form className="search-bar" onSubmit={(e) => e.preventDefault()}>🔎
       <input
         type="text"
         placeholder="Search recipes..."

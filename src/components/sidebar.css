@@ -1,6 +1,6 @@
 /* Sidebar */
-.sidebar {
-    background-color: rgb(11, 49, 11);
+/* .sidebar {
+   background-color: rgb(11, 49, 11);
     width: 230px;
     height: 1400px;
     display: flex;
@@ -30,7 +30,7 @@
 
 .sidebar-link {
     text-decoration: none;
-}
+}*/
 
 .navbar {
     background-color: rgb(11, 49, 11); 
