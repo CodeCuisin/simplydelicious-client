@@ -4,10 +4,6 @@
     color: rgb(4, 10, 15);
 }
 
-.homepage {
-    background-color: rgb(6, 11, 7);
-    color: aliceblue;
-}
 
 .recipe-page {
     display: flex;
@@ -24,26 +20,16 @@
 }
 
 .content {
-    margin-top: 5%;
+   
     font-size: 24px;
     padding: 50px;
     width: 550px;
 }
 
-h1 {
-    top: 10%;
-    font-size: 50px;
-    font-style: italic;
-    text-align: center;
-}
 
-h2 {
-    text-align: center;
-}
+   
 
-.hero {
-    margin-right: 30px;
-}
+
 
 .Recipe,
 .main {
