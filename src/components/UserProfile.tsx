@@ -4,6 +4,7 @@ import { getUserById, updateUser } from "../utils/user.routes";
 import { User } from "../pages/types";
 import { useAuth } from "../context/auth.context";
 import { uploadToCloudinary } from "./CreateRecipe";
+import axios from "axios";
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -14,6 +15,8 @@ const ProfilePage: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: loggedInUser } = useAuth();
+  const { logOutUser } = useAuth();
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -72,6 +75,36 @@ const ProfilePage: React.FC = () => {
     return (
       <div className="text-white text-center text-lg mt-10">User not found</div>
     );
+    const handleDeleteAccount = async () => {
+      if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        try {
+          // Check if token is available
+          const storedToken = localStorage.getItem('authToken');
+          if (!storedToken) {
+            throw new Error('No token found');
+          }
+    
+          // Make API call to delete the user account
+          const response = await axios.delete(`http://localhost:5005/users/${loggedInUser.id}`, {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,  // Include token in headers
+            },
+          });
+    
+          if (response.status === 200) {
+            alert("Your account has been deleted.");
+            logOutUser(); // Log out the user after deletion
+            navigate('/'); // Redirect to home or login page
+          } else {
+            alert('Failed to delete account');
+          }
+        } catch (error) {
+          console.error("Error deleting account: ", error);
+          alert('Error deleting account. Please try again.');
+        }
+      }
+    };
+    
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-darkgreen p-4">
@@ -121,7 +154,8 @@ const ProfilePage: React.FC = () => {
 
         {loggedInUser && user.id === loggedInUser.id && (
           <div className="mt-6 flex gap-4">
-            <button className="w-1/2 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition">
+            <button className="w-1/2 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition"
+            onClick={handleDeleteAccount}>
               Delete Account
             </button>
           </div>
