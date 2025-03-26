@@ -11,7 +11,6 @@ const ProfilePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [updatedBio, setUpdatedBio] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
-
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: loggedInUser } = useAuth();
@@ -40,6 +39,7 @@ const ProfilePage: React.FC = () => {
     try {
       const updatedUser = await updateUser(user.id, { bio: updatedBio });
       setUser(updatedUser);
+      setUpdatedBio("");
     } catch (error) {
       setError("Error updating bio");
     }
@@ -121,9 +121,6 @@ const ProfilePage: React.FC = () => {
 
         {loggedInUser && user.id === loggedInUser.id && (
           <div className="mt-6 flex gap-4">
-            <button className="w-1/2 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
-              Edit Profile
-            </button>
             <button className="w-1/2 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition">
               Delete Account
             </button>
