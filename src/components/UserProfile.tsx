@@ -22,7 +22,7 @@ const ProfilePage: React.FC = () => {
         const data = await getUserById(Number(userId));
         if (data) {
           setUser(data);
-          setUpdatedBio(data.bio || ""); // Ensure bio is set properly
+          setUpdatedBio(data.bio || "");
         } else {
           setError("User not found");
         }
@@ -39,7 +39,7 @@ const ProfilePage: React.FC = () => {
     if (!user) return;
     try {
       const updatedUser = await updateUser(user.id, { bio: updatedBio });
-      setUser(updatedUser); // Update the user with the new bio
+      setUser(updatedUser);
     } catch (error) {
       setError("Error updating bio");
     }
@@ -60,9 +60,18 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  if (loading) return <div className="text-white text-center text-lg mt-10">Loading...</div>;
-  if (error) return <div className="text-red-500 text-center text-lg mt-10">{error}</div>;
-  if (!user) return <div className="text-white text-center text-lg mt-10">User not found</div>;
+  if (loading)
+    return (
+      <div className="text-white text-center text-lg mt-10">Loading...</div>
+    );
+  if (error)
+    return (
+      <div className="text-red-500 text-center text-lg mt-10">{error}</div>
+    );
+  if (!user)
+    return (
+      <div className="text-white text-center text-lg mt-10">User not found</div>
+    );
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-darkgreen p-4">
@@ -73,23 +82,22 @@ const ProfilePage: React.FC = () => {
             alt={user.name}
             className="w-32 h-32 rounded-full border-4 border-lightgreen shadow-lg object-cover"
           />
-          <h1 className="text-3xl font-bold text-lightgreen mt-4">{user.name}</h1>
+          <h1 className="text-3xl font-bold text-lightgreen mt-4">
+            {user.name}
+          </h1>
           <p className="text-lg text-gray-300">{user.email}</p>
 
-          {/* Display Bio under Email */}
-          {user.bio && (
-            <p className="text-md text-gray-300 mt-4">{user.bio}</p>
-          )}
+          {user.bio && <p className="text-md text-gray-300 mt-4">{user.bio}</p>}
         </div>
 
         <div className="mt-6 w-full">
           <h2 className="text-xl font-semibold text-lightgreen">Bio</h2>
           <textarea
-          className="w-full p-3 mt-2 rounded-md text-darkgreen bg-lightgreen border border-lightgreen resize-none"
-             value={updatedBio || ""}
-                onChange={(e) => setUpdatedBio(e.target.value)}
-                rows={4}
-            />
+            className="w-full p-3 mt-2 rounded-md text-darkgreen bg-lightgreen border border-lightgreen resize-none"
+            value={updatedBio || ""}
+            onChange={(e) => setUpdatedBio(e.target.value)}
+            rows={4}
+          />
 
           <button
             className="w-full bg-lightgreen text-darkgreen font-bold py-2 px-4 rounded-lg mt-4 hover:bg-green-500 transition"
@@ -100,7 +108,9 @@ const ProfilePage: React.FC = () => {
         </div>
 
         <div className="mt-6 w-full">
-          <h2 className="text-xl font-semibold text-lightgreen">Profile Image</h2>
+          <h2 className="text-xl font-semibold text-lightgreen">
+            Profile Image
+          </h2>
           <input
             type="file"
             accept="image/*"
@@ -121,7 +131,7 @@ const ProfilePage: React.FC = () => {
         )}
       </div>
     </div>
-);
+  );
 };
 
 export default ProfilePage;
