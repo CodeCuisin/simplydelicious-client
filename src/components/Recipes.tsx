@@ -1,12 +1,11 @@
-import Sidebar from "./Sidebar";
-import "../pages/style.css";
+//import "../pages/style.css";
 import { useEffect, useState } from "react";
 import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
 import { Link } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import Searchbar from "./Searchbar";
-
+import Sidebar from "./Sidebar";
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -49,31 +48,34 @@ const Recipes: React.FC = () => {
   };
 
   return (
-    <div className="recipe-page">
+    <div className="flex bg-pink-50 w-500 ">
       <Sidebar />
-      <div className="content-container">
-      <Navbar />
+      <div className="flex flex-col ">
+        <Navbar />
         <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch} />
-        <div className="recipe-content">
-          <h1 className="recipe-title"> Available Recipes </h1>
+        <div className="ml-5 h-200 ">
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
             <p>{error}</p>
           ) : (
-            <div className="dishes">
+            <div className="grid grid-cols-4 gap-5 w-300 h-116">
               {filteredRecipes.length === 0 ? (
                 <p>No recipes found.</p>
               ) : (
                 filteredRecipes.map((recipeObj) => {
                   console.log("Recipe Image URL: ", recipeObj.image);
                   return (
-                    <div className="recipe-card" key={recipeObj.id}>
-                      <h3>
-                        <b>{recipeObj.title}</b>
+                    <div
+                      className="max-w-sm border-black  rounded-xl  overflow-hidden shadow-2xl p-5 "
+                      key={recipeObj.id}
+                    >
+                      <h3 className="text-xl font-serif font-semibold text-center">
+                        {recipeObj.title}
                       </h3>
                       {recipeObj.image ? (
                         <img
+                          className="w-full h-60 object-cover rounded-sm shadow-lg"
                           src={recipeObj.image}
                           alt={recipeObj.title}
                           width="300"
@@ -85,23 +87,33 @@ const Recipes: React.FC = () => {
                       ) : (
                         <p>No image available</p>
                       )}
-                      <p>Cooking Time: {recipeObj.cookingTime}</p>
-                      <div className="label-container">
+                      <p className="text-center font-medium">
+                        ⏳ {recipeObj.cookingTime}
+                      </p>
+                      <div className="flex gap-3 m-2">
                         {recipeObj.tags && Array.isArray(recipeObj.tags) ? (
                           recipeObj.tags.map((tag: string, index: number) => (
-                            <label className="label" key={index}>
+                            <label
+                              className="bg-fuchsia-200 p-1 rounded-lg"
+                              key={index}
+                            >
                               {tag}
                             </label>
                           ))
                         ) : (
                           <p>No tags available</p>
                         )}
-                        <label className="label">{recipeObj.cuisine}</label>
+                        <label className="bg-indigo-200 p-1 rounded-lg">
+                          {recipeObj.cuisine}
+                        </label>
                       </div>
-
-                      <Link to={`/recipes/${recipeObj.id}`}>
-                        <button>More</button>
-                      </Link>
+                      <div className="flex justify-center ">
+                        <Link to={`/recipes/${recipeObj.id}`}>
+                          <button className="bg-black text-stone-50 m-3 w-20 p-2 rounded-lg text-center">
+                            More
+                          </button>
+                        </Link>
+                      </div>
                     </div>
                   );
                 })
