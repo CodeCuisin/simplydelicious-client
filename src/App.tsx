@@ -8,6 +8,7 @@ import Recipedetails from "./components/Recipedetails";
 import UserProfile from"./components/UserProfile.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
+import Category from "./pages/Category.tsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/Signup" element={<Signup/>} />
         <Route path="/users/:userId" element={<UserProfile/>} />
+        <Route path="/categories" element={<Category/>} />
       </Routes>
     </>
   );
