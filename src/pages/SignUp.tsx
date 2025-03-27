@@ -2,6 +2,8 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEnvelope, FaLock, FaUserPlus, FaUser } from "react-icons/fa";
+import bamboo from "../assets/bamboo.jpg";
+import panda from "../assets/panda-sticker.png";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -34,8 +36,12 @@ function Signup() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-cente  p-0 m-0"
-      style={{ backgroundImage: `url('/src/assets/bamboo.jpg')` }}
     >
+       <img
+        src={bamboo}
+        alt="Background"
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+      />
       <div className="bg-white/30 backdrop-blur-md p-8 rounded-2xl shadow-lg max-w-md w-full flex flex-col items-center ">
         <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2 ">
           <FaUserPlus /> Sign Up
@@ -101,7 +107,7 @@ function Signup() {
       style={{ backgroundImage: "none" }}
        >
   <img
-    src="src/assets/panda-sticker.png" // Path to your panda image
+    src={panda}
     alt="Panda"
     className="w-full h-full object-cover rounded-full"
   />
