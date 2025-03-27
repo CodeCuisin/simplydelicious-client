@@ -66,16 +66,16 @@ const Category: React.FC = () => {
 
       {!loading && !error && filteredRecipes.length > 0 && (
         <div className="grid grid-cols-4 gap-5 w-300 h-100 text-center">
-          {filteredRecipes.map((recipe) => (
-            <div key={recipe.id} className="flex flex-col p-8 gap-8 border rounded-lg shadow-md">
+          {filteredRecipes.map((recipeObj) => (
+            <div key={recipeObj.id} className="flex flex-col p-8 gap-8 border rounded-lg shadow-md">
               <img
-                src={recipe.image ?? "https://via.placeholder.com/150"}
-                alt={recipe.title}
+                src={recipeObj.image ?? "https://via.placeholder.com/150"}
+                alt={recipeObj.title}
                 className="w-50 h-40 object-cover rounded-md mb-2"
               />
-              <h3 className="text-xl font-semibold">{recipe.title}</h3>
-              <label className="bg-indigo-200 text-center p-1 rounded-lg">{recipe.cuisine}</label>
-              <Link to={`/recipes/${recipe.id}`}>
+              <h3 className="text-xl font-semibold">{recipeObj.title}</h3>
+              <label className="bg-indigo-200 text-center p-1 rounded-lg">{recipeObj.cuisine}</label>
+              <Link to={`/recipes/${recipeObj.id}`}>
               <button  className="bg-black text-stone-50 m-3 w-20 p-2 rounded-lg text-center">More</button>
               </Link>
             </div>
