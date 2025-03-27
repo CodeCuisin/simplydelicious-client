@@ -56,13 +56,13 @@ const Recipes: React.FC = () => {
       <div className="flex flex-col ">
         <Navbar />
         <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch} />
-        <div className="ml-5 h-200 ">
+        <div className="ml-5 h-280 ">
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
             <p>{error}</p>
           ) : (
-            <div className="grid grid-cols-4 gap-5 w-300 h-200">
+            <div className="grid grid-cols-4 gap-5 w-300 h-230">
               {filteredRecipes.length === 0 ? (
                 <p>No recipes found.</p>
               ) : (
