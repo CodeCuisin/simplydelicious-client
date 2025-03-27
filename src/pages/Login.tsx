@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
 import { useAuth } from "../context/auth.context"; 
 const API_URL = import.meta.env.VITE_API_URL;
-
+import panda from "../assets/panda-sticker.png";
+import bamboo from "../assets/bamboo.jpg";
 function Signin() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -36,8 +37,12 @@ function Signin() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center p-0 m-0"
-      style={{ backgroundImage: `url('./src/assets/bamboo.jpg')` }}
-    >
+     >
+    <img
+    src={bamboo}
+    alt="Background"
+    className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+  />
       <div className="bg-white/30 backdrop-blur-md p-8 rounded-2xl shadow-lg max-w-md w-full flex flex-col items-center">
         <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
           <FaSignInAlt /> Login
@@ -90,7 +95,7 @@ function Signin() {
       style={{ backgroundImage: "none" }}
        >
   <img
-    src="src/assets/panda-sticker.png" // Path to your panda image
+    src= {panda} 
     alt="Panda"
     className="w-full h-full object-cover rounded-full"
   />
