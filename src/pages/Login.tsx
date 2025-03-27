@@ -36,7 +36,7 @@ function Signin() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center p-0 m-0"
-      style={{ backgroundImage: `url('/src/assets/bamboo.jpg')` }}
+      style={{ backgroundImage: `url('./src/assets/bamboo.jpg')` }}
     >
       <div className="bg-white/30 backdrop-blur-md p-8 rounded-2xl shadow-lg max-w-md w-full flex flex-col items-center">
         <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
