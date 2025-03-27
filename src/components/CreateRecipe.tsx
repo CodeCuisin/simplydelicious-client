@@ -5,6 +5,8 @@ import { createRecipe } from "../utils/recipe.routes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
+import Sidebar from "./Sidebar";
+import { Navbar } from "./Navbar";
 
 export const uploadToCloudinary = async (file: File) => {
   const formData = new FormData();
@@ -160,11 +162,15 @@ const CreateRecipe: React.FC = () => {
   };
 
   return (
-    
-    <div className="bg-pink-50 h-screen">
-      <h1 className="text-3xl font-semibold text-center m-2"> Create Recipe</h1>
+
+    <div className="bg-pink-50 flex w-500 h-260 overflow-auto ">
+      <Sidebar />
+      <div className="font-semibold text-center ">
+      <Navbar />
+      <h1 className="text-3xl font-semibold text-center mt-2 "> Create Recipe</h1>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col justify-items-center items-center text-center gap-5">
+        <div className="flex ml-30">
+        <div className="flex flex-col justify-items-center items-center text-center gap-5 m-15 ">
           <input
             className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
@@ -175,7 +181,7 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <input
-            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-96 h-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="description"
             value={formData.description}
@@ -183,7 +189,7 @@ const CreateRecipe: React.FC = () => {
             placeholder="Recipe description"
           />
           <textarea
-            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-96 h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="ingredients"
             value={formData.ingredients.join(", ")}
             onChange={handleIngredientsChange}
@@ -191,22 +197,15 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <textarea
-            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-96 h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="instructions"
             value={formData.instructions.join("\n")}
             onChange={handleInstructionsChange}
             placeholder="Recipe instructions (newline separated)"
             required
           />
-          <input
-            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-            type="file"
-            name="image"
-            value={formData.image || ""}
-            onChange={handleImageChange}
-            accept="image/*"
-            placeholder="Image URL"
-          />
+         </div>
+         <div className="flex flex-col justify-items-center items-center text-center gap-5 m-10 mt-15">
           <input
             className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
@@ -225,23 +224,25 @@ const CreateRecipe: React.FC = () => {
             placeholder="Serving "
             required
           />
-          <div>
-            <p className="text-xl font-semibold">Select Tags:</p>
+          
+           
+            <p className="text-xl font-semibold ">Select Tags:</p>
+            <div >
             {TAGS.map((tag) => (
-              <label className="text-xl p-5" key={tag}>
+              <label className="text-xl m-5 " key={tag}>
                
                   <input
                     type="checkbox"
                     value={tag}
                     checked={formData.tags.includes(tag)}
                     onChange={() => handleTagChange(tag)}
-                  className=""/>
+                  className="m-2"/>
                   {tag}
                 
               </label>
             ))}
+         
           </div>
-
           <div>
             <p className="text-xl font-semibold">
               Select Cuisine:
@@ -259,10 +260,24 @@ const CreateRecipe: React.FC = () => {
                 </option>
               ))}
             </select>
-          </div>
-          <button className="bg-green-200 rounded-lg p-2 text-xl font-semibold" type="submit"> Create </button>
+            </div>
+            <input
+            className="shadow appearance-none border rounded w-96 m-10 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+            type="file"
+            name="image"
+            value={formData.image || ""}
+            onChange={handleImageChange}
+            accept="image/*"
+            placeholder="Image URL"
+          />
+          
+          <button className="bg-green-200 rounded-lg m-2 p-2 text-xl font-semibold" type="submit"> Create </button>
         </div>
+        </div>
+        
       </form>
+    
+    </div>
     </div>
   );
 };
