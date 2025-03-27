@@ -180,9 +180,8 @@ const CreateRecipe: React.FC = () => {
             placeholder="Recipe Title"
             required
           />
-          <input
+          <textarea
             className="shadow appearance-none border rounded w-96 h-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
             name="description"
             value={formData.description}
             onChange={handleChange}

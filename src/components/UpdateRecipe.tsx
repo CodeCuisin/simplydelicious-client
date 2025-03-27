@@ -5,10 +5,11 @@ import {
   getRecipeById,
   updateRecipe,
 } from "../utils/recipe.routes";
-import "./recipe.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { uploadToCloudinary } from "./CreateRecipe";
 import { useAuth } from "../context/auth.context";
+import Sidebar from "./Sidebar";
+import { Navbar } from "./Navbar";
 
 const UpdateRecipe: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -146,11 +147,15 @@ const UpdateRecipe: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1 className="title"> Update Recipe</h1>
+    <div className="bg-pink-50 flex w-500 h-260 overflow-auto ">
+      <Sidebar />
+      <div className="font-semibold text-center ">
+      <Navbar />
+      <h1 className="text-3xl font-semibold text-center mt-2"> Update Recipe</h1>
       <form onSubmit={handleSubmit}>
-        <div className="create">
-          <input
+        <div className="flex ml-30">
+        <div className="flex flex-col justify-items-center items-center text-center gap-5 m-15 ">
+          <input className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="title"
             value={formData.title}
@@ -158,24 +163,30 @@ const UpdateRecipe: React.FC = () => {
             placeholder="Recipe Title"
           />
           <textarea
+          className="shadow appearance-none border rounded w-96 h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="description"
             value={formData.description}
             onChange={handleChange}
             placeholder="Recipe description"
           />
           <textarea
+          className="shadow appearance-none border rounded w-96 h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="ingredients"
             value={formData.ingredients.join(", ")}
             onChange={handleChange}
             placeholder="Recipe ingredients (comma-separated)"
           />
           <textarea
+          className="shadow appearance-none border rounded w-96 h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="instructions"
             value={formData.instructions.join(", ")}
             onChange={handleChange}
             placeholder="Recipe instructions (comma-separated)"
           />
+           </div>
+           <div className="flex flex-col justify-items-center items-center text-center gap-5 m-10 mt-15">
           <input
+          className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="cookingTime"
             value={formData.cookingTime}
@@ -183,31 +194,26 @@ const UpdateRecipe: React.FC = () => {
             placeholder="Recipe Cooking Time"
           />
           <input
+          className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             name="serving"
             value={formData.serving}
             onChange={handleChange}
             placeholder="Serving "
           />
-          <label>Update Image:</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {formData.image && (
-            <div>
-              <p>Current Image:</p>
-              <img src={formData.image} alt="Current Recipe" width="200" />
-            </div>
-          )}
+         
           <div>
-            <p>
-              <b>Select Tags:</b>
+            <p className="text-xl font-semibold ">
+              Select Tags:
             </p>
             {TAGS.map((tag) => (
-              <label key={tag}>
+              <label className="text-xl m-5 " key={tag}>
                 <input
                   type="checkbox"
                   value={tag}
                   checked={formData.tags.includes(tag)}
                   onChange={() => handleTagChange(tag)}
+                  className="m-2"
                 />
                 {tag}
               </label>
@@ -215,8 +221,8 @@ const UpdateRecipe: React.FC = () => {
           </div>
 
           <div>
-            <p>
-              <b>Select Cuisine:</b>
+            <p className="text-xl font-semibold">
+              Select Cuisine:
             </p>
             <select
               name="cuisine"
@@ -231,10 +237,22 @@ const UpdateRecipe: React.FC = () => {
                 </option>
               ))}
             </select>
+            <label>Update Image:</label>
+          <input 
+           className="shadow appearance-none border rounded w-96 m-10 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+          type="file" accept="image/*" onChange={handleImageChange} />
+          {formData.image && (
+            <div>
+              <p>Current Image:</p>
+              <img src={formData.image} alt="Current Recipe" width="200" />
+            </div>
+          )}
           </div>
-          <button type="submit"> Update</button>
+          <button className="bg-green-200 rounded-lg m-2 p-2 text-xl font-semibold" type="submit"> Update</button>
+        </div>
         </div>
       </form>
+    </div>
     </div>
   );
 };
