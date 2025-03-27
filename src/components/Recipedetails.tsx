@@ -52,7 +52,7 @@ const Recipedetails: React.FC = () => {
       <div className="w-400">
         <Navbar />
 
-        <div className="bg-pink-50 top-0 h-235 overflow-auto">
+        <div className="bg-pink-50 p-10 h-235 overflow-auto">
           {recipes.length === 0 ? (
             <p>No recipes found.</p>
           ) : (
