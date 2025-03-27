@@ -79,12 +79,12 @@ const Recipedetails: React.FC = () => {
                   <div className="flex flex-col w-180 ml-10">
                     <div className=" ">
                       {recipeObj.image ? (
-                        <img className= "w-50 rounded-lg" src={recipeObj.image} alt={recipeObj.title} />
+                        <img className= "w-80 rounded-lg" src={recipeObj.image} alt={recipeObj.title} />
                       ) : (
                         <p>No image available</p>
                       )}
                     </div>
-                    <div className="w-100 p-2">
+                    <div className="w-100 p-4">
                       <p>
                         <b>Ingredients:</b>
                       </p>

@@ -56,7 +56,7 @@ const Recipes: React.FC = () => {
       <div className="flex flex-col ">
         <Navbar />
         <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch} />
-        <div className="ml-5 h-280 ">
+        <div className="ml-30 h-280 ">
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
