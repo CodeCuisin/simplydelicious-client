@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Recipe } from "./types";
 import { getRecipes } from "../utils/recipe.routes";
 import { Link } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import { Navbar } from "../components/Navbar";
 
 
 
@@ -33,27 +35,31 @@ const PopularRecipes: React.FC = () => {
     fetchRecipes();
   }, []);
   return (
-    <div className="p-4">
-      <h1 className="text-2xl text-center font-bold mb-4">Popular Picks</h1>
+    <div className="flex bg-pink-50 w-500 h-260 overflow-auto">
+      <Sidebar />
+      <div className="flex flex-col ">
+      <Navbar />
+      <h1 className="text-2xl text-center font-bold mb-4">Popular Recipes</h1>
 
       {loading && <p>Loading recipes...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && !error && recipes.length > 0 && (
-        <div className="m-10 ">
-          <ul className="grid grid-cols-4 gap-5 w-300 h-100 text-center ">
+      
+          <ul className="grid grid-cols-4 gap-5 w-300 h-100 text-center ml-10">
             {popularRecipes.map((recipeObj) => (
-              <li key={recipeObj.id} className="text-xl font-semibold border-2">
+              <li key={recipeObj.id} className="text-xl font-semibold border-2 mt-10 p-4">
                 {recipeObj.title}
-                <img src={recipeObj.image ?? "https://via.placeholder.com/150"} alt={recipeObj.title} className= "w-50 rounded-lg m-2"/>
+                <img src={recipeObj.image ?? "https://via.placeholder.com/150"} alt={recipeObj.title} className= "w-60 rounded-lg m-2"/>
                 <Link to={`/recipes/${recipeObj.id}`}>
               <button  className="bg-black text-stone-50 m-3 w-20 p-2 rounded-lg text-center">More</button>
               </Link>
               </li>
             ))}
           </ul>
-        </div>
+     
       )}
+    </div>
     </div>
   );
 };
