@@ -1,4 +1,3 @@
-//import "../pages/style.css";
 import { useEffect, useState } from "react";
 import { Recipe } from "../pages/types";
 import { getRecipes } from "../utils/recipe.routes";
@@ -6,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
+import "./Loader.css";
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -19,7 +19,10 @@ const Recipes: React.FC = () => {
       try {
         const data = await getRecipes();
         console.log("Fetched Recipes:", data);
-        console.log("Type of Fetched Data:", Array.isArray(data) ? 'Array' : typeof data);
+        console.log(
+          "Type of Fetched Data:",
+          Array.isArray(data) ? "Array" : typeof data
+        );
         if (Array.isArray(data)) {
           setRecipes(data);
           setFilteredRecipes(data);
@@ -58,7 +61,7 @@ const Recipes: React.FC = () => {
         <Searchbar searchQuery={searchQuery} setSearchQuery={handleSearch} />
         <div className="ml-30 h-280 ">
           {loading ? (
-            <p>Loading...</p>
+            <div className="flex mt-50 justify-center content-center"><span className="loader"></span></div>
           ) : error ? (
             <p>{error}</p>
           ) : (
