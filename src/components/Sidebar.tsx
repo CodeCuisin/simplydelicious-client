@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
 import simplydelicious from "../assets/Simplydelicious.gif";
 
@@ -11,9 +11,8 @@ type SidebarItem = {
 };
 
 const Sidebar: React.FC = () => {
-  const { userId } = useParams();
+  const { user } = useAuth();
   const { isLoggedIn, logOutUser } = useAuth();
-  console.log(userId);
   const sidebarItems: SidebarItem[] = [
     { label: "Home   🏠︎ ", link: "/recipes" },
     { label: "Login  👤", link: "/login", hideIfLoggedIn: true },
@@ -50,7 +49,7 @@ const Sidebar: React.FC = () => {
         
             <div >
               <li className="flex flex-col bg-slate-900 p-2 rounded-lg text-center">
-            <Link  to ={`/users/${userId}`}>
+            <Link  to ={`/users/${user.id}`}>
               <button onClick={logOutUser}>My Profile 👤</button>
               </Link>
               </li>
