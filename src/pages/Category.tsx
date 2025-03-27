@@ -76,7 +76,7 @@ const Category: React.FC = () => {
               <img
                 src={recipeObj.image ?? "https://via.placeholder.com/150"}
                 alt={recipeObj.title}
-                className="w-80 p-1 h-45 object-cover rounded-md "
+                className="w-80 p-1 h-70 object-cover rounded-md "
               />
               <h3 className="text-xl font-semibold">{recipeObj.title}</h3>
               <label className="bg-indigo-200 text-center p-1 rounded-lg">{recipeObj.cuisine}</label>
