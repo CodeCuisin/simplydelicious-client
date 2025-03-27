@@ -127,12 +127,13 @@ const ProfilePage: React.FC = () => {
 
         <div className="mt-6 w-full">
           <h2 className="text-lg md:text-xl font-semibold text-lightgreen">Profile Image</h2>
+          {image && (
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
             className="mt-2 p-2 w-full bg-white text-darkgreen border border-lightgreen rounded-lg cursor-pointer"
-          />
+          />)}
         </div>
         {loggedInUser && user.id === loggedInUser.id && (
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
