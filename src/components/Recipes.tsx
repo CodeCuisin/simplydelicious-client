@@ -19,11 +19,14 @@ const Recipes: React.FC = () => {
       try {
         const data = await getRecipes();
         console.log("Fetched Recipes:", data);
-        if (data.length > 0) {
+        console.log("Type of Fetched Data:", Array.isArray(data) ? 'Array' : typeof data);
+        if (Array.isArray(data)) {
           setRecipes(data);
           setFilteredRecipes(data);
         } else {
           console.warn("No recipes found, state not updating.");
+          setRecipes([]);
+          setFilteredRecipes([]);
         }
       } catch (error) {
         console.error("Error fetching recipes", error);
