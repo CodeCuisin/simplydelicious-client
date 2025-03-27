@@ -1,11 +1,11 @@
 import axios from "axios";
 import { User } from "../pages/types";
 
-const API_URL = "http://localhost:5005"; 
+//const API_URL = "http://localhost:5005"; 
 
 export const getUsers = async (): Promise<User[]> => {
   try {
-    const response = await axios.get<User[]>(`${API_URL}/users`);
+    const response = await axios.get<User[]>(`${import.meta.env.VITE_API_URL}/users`);
     console.log("API Response:", response.data);
     return response.data;
   } catch (error) {
@@ -16,7 +16,7 @@ export const getUsers = async (): Promise<User[]> => {
 
 export const getUserById = async (userId: number | string): Promise<User | null> => {
   try {
-    const response = await axios.get<User>(`${API_URL}/users/${userId}`);
+    const response = await axios.get<User>(`${import.meta.env.VITE_API_URL}/users/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user by ID:", error);
@@ -37,7 +37,7 @@ export const updateUser = async (
     }
 
     const response = await axios.put(
-      `${API_URL}/users/${userId}`,
+      `${import.meta.env.VITE_API_URL}/users/${userId}`,
       updatedUser,
       {
         headers: {
@@ -57,7 +57,7 @@ export const updateUser = async (
 
 export const deleteUser = async (userId: number): Promise<void> => {
   try {
-    await axios.delete(`${API_URL}/users/${userId}`);
+    await axios.delete(`${import.meta.env.VITE_API_URL}/users/${userId}`);
   } catch (error) {
     console.error("Error deleting user:", error);
     throw new Error("Unable to delete user.");
