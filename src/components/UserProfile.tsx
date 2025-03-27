@@ -5,6 +5,8 @@ import { User } from "../pages/types";
 import { useAuth } from "../context/auth.context";
 import { uploadToCloudinary } from "./CreateRecipe";
 import axios from "axios";
+import Sidebar from "./Sidebar";
+import { Navbar } from "./Navbar";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const ProfilePage: React.FC = () => {
@@ -12,7 +14,7 @@ const ProfilePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [updatedBio, setUpdatedBio] = useState<string>("");
-  const [image, setImage] = useState<File | null>(null);
+  //const [image, setImage] = useState<File | null>(null);
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const { user: loggedInUser } = useAuth();
@@ -53,7 +55,7 @@ const ProfilePage: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setImage(file);
+   // setImage(file);
 
     try {
       const imageUrl = await uploadToCloudinary(file);
@@ -108,8 +110,12 @@ const ProfilePage: React.FC = () => {
     
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-darkgreen p-4">
-      <div className="bg-green-900 text-white p-8 rounded-xl shadow-lg w-full max-w-3xl">
+    <div className="flex bg-pink-50 w-500 h-260 overflow-auto">
+      <Sidebar />
+      <div className="flex flex-col items-center ">
+      <Navbar />
+    
+      <div className="bg-green-950 text-white p-8 rounded-xl shadow-lg w-full max-w-3xl mt-20 ">
         <div className="flex flex-col items-center mb-6">
           <img
             src={user.image || "default-image-url.jpg"}
@@ -124,7 +130,7 @@ const ProfilePage: React.FC = () => {
           {user.bio && <p className="text-md text-gray-300 mt-4">{user.bio}</p>}
         </div>
 
-        <div className="mt-6 w-full">
+        <div className="mt-6 w-full ">
           <h2 className="text-xl font-semibold text-lightgreen">Bio</h2>
           <textarea
             className="w-full p-3 mt-2 rounded-md text-darkgreen bg-lightgreen border border-lightgreen resize-none"
@@ -133,35 +139,38 @@ const ProfilePage: React.FC = () => {
             rows={4}
           />
 
-          <button
-            className="w-full bg-lightgreen text-darkgreen font-bold py-2 px-4 rounded-lg mt-4 hover:bg-green-500 transition"
-            onClick={handleUpdateBio}
-          >
-            Update Bio
-          </button>
+         
         </div>
 
-        <div className="mt-6 w-full">
-          <h2 className="text-lg md:text-xl font-semibold text-lightgreen">Profile Image</h2>
-          {image && (
+        <div className="flex m-5">
+          <h2 className="text-lg md:text-xl font-semibold">Profile Image</h2>
+          
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="mt-2 p-2 w-full bg-white text-darkgreen border border-lightgreen rounded-lg cursor-pointer"
-          />)}
+            className="m-2 w-20 text-darkgreen border border-lightgreen rounded-lg cursor-pointer"
+          />
+        
         </div>
-
         {loggedInUser && user.id === loggedInUser.id && (
           <div className="mt-6 flex gap-4">
-            <button className="w-1/2 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition"
+            <button className="w-40 bg-red-500  font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition"
             onClick={handleDeleteAccount}>
               Delete Account
             </button>
+            <button
+            className="w-40 bg-blue-400  font-bold py-2 px-4 rounded-lg hover:bg-green-500 transition"
+            onClick={handleUpdateBio}
+          >
+            Update Bio
+          </button>
           </div>
         )}
       </div>
     </div>
+    </div>
+   
   );
 };
 
