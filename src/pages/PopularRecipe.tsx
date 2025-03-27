@@ -39,7 +39,7 @@ const PopularRecipes: React.FC = () => {
       {loading && <p>Loading recipes...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      {!loading && !error && (
+      {!loading && !error && recipes.length > 0 && (
         <div className="m-10 ">
           <ul className="grid grid-cols-4 gap-5 w-300 h-100 text-center ">
             {popularRecipes.map((recipeObj) => (
