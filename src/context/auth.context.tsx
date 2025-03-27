@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, ReactNode } from "react";
 import axios from "axios";
 import { Recipe } from "../pages/types";
-
+const API_URL = import.meta.env.VITE_API_URL;
 // Define the AuthContext Type
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -76,7 +76,7 @@ const AuthProviderWrapper: React.FC<AuthProviderProps> = ({ children }) => {
 
     if (storedToken) {
       axios
-        .get(`http://localhost:5005/auth/verify`, { // Fixed URL here
+        .get(`${API_URL}/auth/verify`, { // Fixed URL here
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {
