@@ -9,7 +9,7 @@ function Signup() {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
@@ -20,7 +20,7 @@ function Signup() {
     e.preventDefault();
     setLoading(true);
 
-    axios.post(`http://localhost:5005/auth/signup`, { email, password, name })
+    axios.post(`${API_URL}/auth/signup`, { email, password, name })
       .then(() => {
         setLoading(false);
         navigate("/login");

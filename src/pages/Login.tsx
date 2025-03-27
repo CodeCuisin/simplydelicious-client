@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
 import { useAuth } from "../context/auth.context"; 
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -22,7 +23,7 @@ function Signin() {
     const requestBody = { email, password };
 
     try {
-      const response = await axios.post(`http://localhost:5005/auth/login`, requestBody);
+      const response = await axios.post(`${API_URL}/auth/login`, requestBody);
       storeToken(response.data.authToken);
       navigate("/recipes");
     } catch (error: any) {

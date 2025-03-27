@@ -62,7 +62,7 @@ const Recipes: React.FC = () => {
           ) : error ? (
             <p>{error}</p>
           ) : (
-            <div className="grid grid-cols-4 gap-5 w-300 h-116">
+            <div className="grid grid-cols-4 gap-5 w-300 h-180">
               {filteredRecipes.length === 0 ? (
                 <p>No recipes found.</p>
               ) : (
