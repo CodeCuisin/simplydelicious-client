@@ -2,9 +2,10 @@ import axios from "axios";
 import { Recipe } from "../pages/types";
 
 //const API_URL = "http://localhost:5005";
-
+const storedToken = localStorage.getItem("authToken");
 export const getRecipes = async (): Promise<Recipe[]> => {
   try {
+    
     const response = await axios.get<Recipe[]>(`${import.meta.env.VITE_API_URL}/recipes`);
     console.log("API Response:", response.data);
     return response.data;
@@ -16,7 +17,7 @@ export const getRecipes = async (): Promise<Recipe[]> => {
 export const createRecipe = async (
   newRecipe: Omit<Recipe, "id" | "createdAt" | "updatedAt">
 ): Promise<Recipe> => {
-  const response = await axios.post(`${import.meta.env.VITE_API_URL}/create-recipe`, newRecipe);
+  const response = await axios.post(`${import.meta.env.VITE_API_URL}/create-recipe`, newRecipe,{ headers: { Authorization: `Bearer ${storedToken}` } });
   return response.data;
 };
 
