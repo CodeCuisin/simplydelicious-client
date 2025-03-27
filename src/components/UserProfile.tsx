@@ -86,7 +86,7 @@ const ProfilePage: React.FC = () => {
           }
     
           // Make API call to delete the user account
-          const response = await axios.delete(`${API_URL}/${loggedInUser.id}`, {
+          const response = await axios.delete(`${API_URL}/users/${loggedInUser.id}`, {
             headers: {
               Authorization: `Bearer ${storedToken}`,  // Include token in headers
             },
@@ -95,7 +95,7 @@ const ProfilePage: React.FC = () => {
           if (response.status === 200) {
             alert("Your account has been deleted.");
             logOutUser(); // Log out the user after deletion
-            navigate('/'); // Redirect to home or login page
+            navigate('/recipes'); // Redirect to home or login page
           } else {
             alert('Failed to delete account');
           }

@@ -19,9 +19,9 @@ function Signin() {
 
   const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Form submitted");
     setLoading(true);
     const requestBody = { email, password };
-
     try {
       const response = await axios.post(`${API_URL}/auth/login`, requestBody);
       storeToken(response.data.authToken);

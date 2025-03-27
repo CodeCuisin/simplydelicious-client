@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
             <div >
               <li className="flex flex-col bg-slate-900 p-2 rounded-lg text-center">
             <Link  to ={`/users/${user.id}`}>
-              <button onClick={logOutUser}>My Profile 👤</button>
+              <button >My Profile 👤</button>
               </Link>
               </li>
              

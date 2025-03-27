@@ -58,10 +58,13 @@ const AuthProviderWrapper: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Store token in local storage and authenticate user
   const storeToken = (token: string) => {
+    console.log("Storing token:", token); // Debug log
     localStorage.setItem("authToken", token);
-    setIsLoggedIn(true); // Update state immediately
+    console.log("Token stored:", localStorage.getItem("authToken")); // Verify storage
+    setIsLoggedIn(true);
     authenticateUser();
   };
+  
 
   // Remove token from storage
   const removeToken = () => {
