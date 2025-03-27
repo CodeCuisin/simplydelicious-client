@@ -152,10 +152,10 @@ const CreateRecipe: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold text-center"> Create Recipe</h1>
+      <h1 className="text-3xl font-semibold text-center m-2"> Create Recipe</h1>
       <form onSubmit={handleSubmit}>
         <div className="create">
-          <input
+          <input className="w-24 border "
             type="text"
             name="title"
             value={formData.title}

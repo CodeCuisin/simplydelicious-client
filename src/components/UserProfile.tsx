@@ -6,6 +6,7 @@ import { useAuth } from "../context/auth.context";
 import { uploadToCloudinary } from "./CreateRecipe";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -85,7 +86,7 @@ const ProfilePage: React.FC = () => {
           }
     
           // Make API call to delete the user account
-          const response = await axios.delete(`http://localhost:5005/users/${loggedInUser.id}`, {
+          const response = await axios.delete(`${API_URL}/${loggedInUser.id}`, {
             headers: {
               Authorization: `Bearer ${storedToken}`,  // Include token in headers
             },
