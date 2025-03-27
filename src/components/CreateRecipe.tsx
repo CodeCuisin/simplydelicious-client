@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Cuisine, Recipe, Tag } from "../pages/types";
 import { createRecipe } from "../utils/recipe.routes";
-import "./recipe.css";
+//import "./recipe.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
@@ -152,7 +152,7 @@ const CreateRecipe: React.FC = () => {
 
   return (
     <div>
-      <h1 className="title"> Create Recipe</h1>
+      <h1 className="text-3xl font-semibold text-center"> Create Recipe</h1>
       <form onSubmit={handleSubmit}>
         <div className="create">
           <input
@@ -219,7 +219,7 @@ const CreateRecipe: React.FC = () => {
                   value={tag}
                   checked={formData.tags.includes(tag)}
                   onChange={() => handleTagChange(tag)}
-                />
+                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
                 {tag}
               </label>
             ))}
