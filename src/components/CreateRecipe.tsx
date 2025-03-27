@@ -29,15 +29,24 @@ export const uploadToCloudinary = async (file: File) => {
   }
 };
 
-
 const CreateRecipe: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const authorObj = user;
   console.log(authorObj);
-  const TAGS: Tag[] = ["Lunch" , "Breakfast" , "Dinner" , "Dessert" , "Snacks"];
-  const CUISINES: Cuisine[] = ["Indian" , "Arabic" ,"Mexican" , "Italian" , "French","American" , "German" ,"" ];
-  
+
+  const TAGS: Tag[] = ["Lunch", "Breakfast", "Dinner", "Dessert", "Snacks"];
+  const CUISINES: Cuisine[] = [
+    "Indian",
+    "Arabic",
+    "Mexican",
+    "Italian",
+    "French",
+    "American",
+    "German",
+    "",
+  ];
+
   const [formData, setFormData] = useState<
     Omit<Recipe, "id" | "createdAt" | "updatedAt">
   >({
@@ -115,7 +124,7 @@ const CreateRecipe: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("this is newrecipeeeeeeeee");
+    console.log("this is newrecipe");
     try {
       let imageUrl = "";
 
@@ -128,7 +137,7 @@ const CreateRecipe: React.FC = () => {
         image: imageUrl,
         author: authorObj,
       });
-      console.log("this is newrecipeeeeeeeee", newRecipe);
+      console.log("this is newrecipe", newRecipe);
       alert(`Recipe ${newRecipe.title} created!`);
       setFormData({
         title: "",
@@ -151,11 +160,13 @@ const CreateRecipe: React.FC = () => {
   };
 
   return (
-    <div>
+    
+    <div className="bg-pink-50 h-screen">
       <h1 className="text-3xl font-semibold text-center m-2"> Create Recipe</h1>
       <form onSubmit={handleSubmit}>
-        <div className="create">
-          <input className="w-24 border "
+        <div className="flex flex-col justify-items-center items-center text-center gap-5">
+          <input
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="title"
             value={formData.title}
@@ -164,6 +175,7 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <input
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="description"
             value={formData.description}
@@ -171,6 +183,7 @@ const CreateRecipe: React.FC = () => {
             placeholder="Recipe description"
           />
           <textarea
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="ingredients"
             value={formData.ingredients.join(", ")}
             onChange={handleIngredientsChange}
@@ -178,6 +191,7 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <textarea
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="instructions"
             value={formData.instructions.join("\n")}
             onChange={handleInstructionsChange}
@@ -185,6 +199,7 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <input
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
             type="file"
             name="image"
             value={formData.image || ""}
@@ -193,6 +208,7 @@ const CreateRecipe: React.FC = () => {
             placeholder="Image URL"
           />
           <input
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="cookingTime"
             value={formData.cookingTime}
@@ -201,6 +217,7 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <input
+            className="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             name="serving"
             value={formData.serving}
@@ -209,25 +226,25 @@ const CreateRecipe: React.FC = () => {
             required
           />
           <div>
-            <p>
-              <b>Select Tags:</b>
-            </p>
+            <p className="text-xl font-semibold">Select Tags:</p>
             {TAGS.map((tag) => (
-              <label key={tag}>
-                <input
-                  type="checkbox"
-                  value={tag}
-                  checked={formData.tags.includes(tag)}
-                  onChange={() => handleTagChange(tag)}
-                  className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                {tag}
+              <label className="text-xl p-5" key={tag}>
+               
+                  <input
+                    type="checkbox"
+                    value={tag}
+                    checked={formData.tags.includes(tag)}
+                    onChange={() => handleTagChange(tag)}
+                  className=""/>
+                  {tag}
+                
               </label>
             ))}
           </div>
 
           <div>
-            <p>
-              <b>Select Cuisine:</b>
+            <p className="text-xl font-semibold">
+              Select Cuisine:
             </p>
             <select
               name="cuisine"
@@ -243,7 +260,7 @@ const CreateRecipe: React.FC = () => {
               ))}
             </select>
           </div>
-          <button type="submit"> Create Recipe</button>
+          <button className="bg-green-200 rounded-lg p-2 text-xl font-semibold" type="submit"> Create </button>
         </div>
       </form>
     </div>
