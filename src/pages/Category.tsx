@@ -62,7 +62,7 @@ const Category: React.FC = () => {
         ))}
       </div>
 
-      {loading && <p>Loading recipes...</p>}
+      {loading && <div className="flex mt-50 justify-center content-center"><span className="loader"></span></div>}
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && !error && filteredRecipes.length === 0 && (

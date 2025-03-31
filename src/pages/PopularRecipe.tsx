@@ -41,7 +41,7 @@ const PopularRecipes: React.FC = () => {
       <Navbar />
       <h1 className="text-2xl text-center font-bold mb-4">Popular Recipes</h1>
 
-      {loading && <p>Loading recipes...</p>}
+      {loading &&  <div className="flex mt-50 justify-center content-center"><span className="loader"></span></div>}
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && !error && recipes.length > 0 && (
