@@ -49,7 +49,7 @@ const Recipedetails: React.FC = () => {
   return (
     <div className="flex w-500 h-260 overflow-auto">
       <Sidebar />
-      <div className="w-400">
+      <div className="w-345">
         <Navbar />
 
         <div className="bg-pink-50 p-10 h-235 overflow-auto">
