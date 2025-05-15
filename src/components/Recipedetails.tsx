@@ -47,14 +47,12 @@ const Recipedetails: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen overflow-hidden">
-      <div className="w-[200px]">
-        <Sidebar />
-      </div>
-      <div className="flex-1 flex flex-col">
+    <div className="flex w-500 h-260 overflow-auto">
+         <Sidebar />
+         <div className="w-400">
         <Navbar />
 
-        <div className="bg-pink-50 p-10 overflow-y-auto">
+        <div className="bg-pink-50 p-10 h-235 overflow-auto">
           {recipes.length === 0 ? (
             <p>No recipes found.</p>
           ) : (
