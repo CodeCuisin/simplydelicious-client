@@ -47,12 +47,14 @@ const Recipedetails: React.FC = () => {
   };
 
   return (
-    <div className="flex w-500 h-260 overflow-auto">
-      <Sidebar />
-      <div className="w-400">
+    <div className="flex min-h-screen overflow-hidden">
+      <div className="w-[200px]">
+        <Sidebar />
+      </div>
+      <div className="flex-1 flex flex-col">
         <Navbar />
 
-        <div className="bg-pink-50 p-10 h-235 overflow-auto">
+        <div className="bg-pink-50 p-10 overflow-y-auto">
           {recipes.length === 0 ? (
             <p>No recipes found.</p>
           ) : (
@@ -74,65 +76,86 @@ const Recipedetails: React.FC = () => {
                         {" "}
                         <img className="w-15 " src={bluebtn} />{" "}
                       </button>
-                    </Link>
-                  </div>
-                )}
-
-                <div className="flex ">
-                  <div className="flex flex-col w-180 ml-10">
-                    <div className=" ">
-                      {recipeObj.image ? (
-                        <img className= "w-80 rounded-lg" src={recipeObj.image} alt={recipeObj.title} />
-                      ) : (
-                        <p>No image available</p>
-                      )}
+                      </Link>
+                      <Link to={`/recipes/${recipeObj.id}/update`}>
+                        <button>
+                          {" "}
+                          <img className="w-15 " src={bluebtn} />{" "}
+                        </button>
+                      </Link>
                     </div>
-                    <div className="w-100 p-4">
-                      <p>
-                        <b>Ingredients:</b>
+                  )}
+
+                  <div className="flex ">
+                    <div className="flex flex-col w-180 ml-10">
+                      <div className=" ">
+                        {recipeObj.image ? (
+                          <img
+                            className="w-80 rounded-lg"
+                            src={recipeObj.image}
+                            alt={recipeObj.title}
+                          />
+                        ) : (
+                          <p>No image available</p>
+                        )}
+                      </div>
+                      <div className="w-100 p-4">
+                        <p>
+                          <b>Ingredients:</b>
+                        </p>
+                        <ol className="list-(--my-marker) font-semibold">
+                          {recipeObj.ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col w-400">
+                      <h1 className="text-4xl font-bold pb-4 ">
+                        {recipeObj.title}
+                      </h1>
+                      <p className="text-xl font-bold pb-2">Description: </p>
+                      <p className="pb-2 font-semibold w-230">
+                        {" "}
+                        {recipeObj.description}
                       </p>
-                      <ol className="list-(--my-marker) font-semibold">
-                        {recipeObj.ingredients.map((ingredient, index) => (
-                          <li key={index}>{ingredient}</li>
+
+                      <p className="font-bold pb-2">
+                        ⏳ Cooking Time: {recipeObj.cookingTime}
+                      </p>
+                      <p className="font-bold pb-2">
+                        🍽️ Serving: {recipeObj.serving}
+                      </p>
+
+                      <div className="font-semibold p-2">
+                        {recipeObj.tags.map((tag, index) => (
+                          <label
+                            className="bg-fuchsia-200 p-2 m-4 rounded-lg"
+                            key={index}
+                          >
+                            {tag}
+                          </label>
                         ))}
-                      </ol>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col w-400">
-                    <h1 className="text-4xl font-bold pb-4 ">
-                    {recipeObj.title}
-                    </h1>
-                    <p className="text-xl font-bold pb-2">
-                      Description: </p><p className="pb-2 font-semibold w-250"> {recipeObj.description}</p>
-                   
-                    <p className="font-bold pb-2">
-                       ⏳ Cooking Time: {recipeObj.cookingTime}
-                    </p>
-                    <p className="font-bold pb-2">
-                     🍽️ Serving: {recipeObj.serving}
-                    </p>
-
-                    <div className="font-semibold p-2">
-                      {recipeObj.tags.map((tag, index) => (
-                        <label  className="bg-fuchsia-200 p-2 m-4 rounded-lg" key={index}>
-                          {tag}
+                        <label className="bg-indigo-200 p-2 m-2 rounded-lg">
+                          {recipeObj.cuisine}
                         </label>
-                      ))}
-                      <label className="bg-indigo-200 p-2 m-2 rounded-lg">{recipeObj.cuisine}</label>
-                    </div>
+                      </div>
 
-                    <p className="font-bold p-2">
-                       🧑‍🍳 Instructions:
-                    </p>
-                    <ul className="list-decimal flex flex-col gap-2">
-                      {recipeObj.instructions.map((instruction, index) => (
-                        <li className="p-2 font-semibold bg-sky-50 w-fit rounded-lg shadow-xl "key={index}>{instruction}</li>
-                      ))}
-                    </ul>
+                      <p className="font-bold p-2">🧑‍🍳 Instructions:</p>
+                      <ul className="list-decimal flex flex-col gap-2">
+                        {recipeObj.instructions.map((instruction, index) => (
+                          <li
+                            className="p-2 font-semibold bg-sky-50 w-fit rounded-lg shadow-xl "
+                            key={index}
+                          >
+                            {instruction}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
             );
           })
           )}
