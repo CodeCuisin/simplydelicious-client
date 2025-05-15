@@ -47,7 +47,7 @@ const Recipedetails: React.FC = () => {
   };
 
   return (
-    <div className="flex w-full h-full overflow-auto">
+    <div className="flex w-500 h-260 overflow-auto">
       <Sidebar />
       <div className="w-345">
         <Navbar />
@@ -105,7 +105,7 @@ const Recipedetails: React.FC = () => {
                     {recipeObj.title}
                     </h1>
                     <p className="text-xl font-bold pb-2">
-                      Description: </p><p className="pb-2 font-semibold w-250"> {recipeObj.description}</p>
+                      Description: </p><p className="pb-2 font-semibold w-235"> {recipeObj.description}</p>
                    
                     <p className="font-bold pb-2">
                        ⏳ Cooking Time: {recipeObj.cookingTime}
