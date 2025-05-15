@@ -56,10 +56,13 @@ const Recipedetails: React.FC = () => {
           {recipes.length === 0 ? (
             <p>No recipes found.</p>
           ) : (
-            recipes.map((recipeObj) => (
+            recipes.map((recipeObj) => {
+              console.log("User:", user)
+                console.log("Recipe Author:", recipeObj.author);
+                 return( 
               <div key={recipeObj.id} className="recipe-cards">
                 {user && recipeObj.author?.id === user.id && (
-                  <div className="flex flex-row-reverse mt-2 mr-8 gap-5 ">
+                  <div className="flex flex-row-reverse mt-2 mr-20 gap-5 ">
                     <button
                       className="delete-btn"
                       onClick={() => handleDelete(recipeObj.id)}
@@ -130,7 +133,8 @@ const Recipedetails: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ))
+            );
+          })
           )}
         </div>
       </div>
